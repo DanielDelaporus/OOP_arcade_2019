@@ -6,9 +6,14 @@
 */
 
 #include "SolarFox.hpp"
+//#include "../lib/ncurse/.hpp"
+//#include "../lib/SFML/.hpp"
 
-SolarFox::SolarFox()
+SolarFox::SolarFox(std::string library)
 {
+    lib = library;
+    pos[0] = 40 / 2;
+    pos[1] = 30 / 2;
     matrix[pos[0]][pos[1]] = 1;
     for (int i = 0; i < 40; i++) {
         for (int j = 0; j < 30; j++) {
@@ -25,5 +30,8 @@ SolarFox::~SolarFox()
 
 void SolarFox::loop()
 {
-    
+    while (5) {
+        
+
+    }
 }

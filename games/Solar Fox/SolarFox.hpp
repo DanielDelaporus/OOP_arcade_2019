@@ -8,13 +8,16 @@
 #ifndef SOLARFOX_HPP_
 #define SOLARFOX_HPP_
 
+#include<string>
+
 class SolarFox {
     public:
-        SolarFox();
+        SolarFox(const std::string lib);
         void loop();
         ~SolarFox();
 
     protected:
+        std::string lib;
         int pos[2];
         int width = 40;
         int height = 30;
