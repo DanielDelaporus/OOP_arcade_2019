@@ -16,23 +16,6 @@ Pacman::Pacman()
     //      2 - wall
     //      3 - path with coin
     //      4 - path with powerup
-
-    for (int i = 0; i < 40; i++)
-        for (int j = 0; j < 40; j++)
-            matrix[i][j] = 0;
-    
-    for (int j = 0; j < 40; j++)
-        matrix[0][j] = 2;
-
-    for (int j = 0; j < 40; j++)
-        matrix[39][j] = 2;
-    
-    for (int i = 0; i < 40; i++)
-        matrix[i][0] = 2;
-    
-    for (int i = 0; i < 40; i++)
-        matrix[i][39] = 2;
-    
     
 }
 

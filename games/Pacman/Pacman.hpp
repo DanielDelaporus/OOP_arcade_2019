@@ -8,6 +8,8 @@
 #ifndef PACMAN_HPP_
 #define PACMAN_HPP_
 
+#include <iostream>
+
 class Pacman {
     public:
         Pacman();
@@ -17,6 +19,7 @@ class Pacman {
     protected:
         int pos[2];
         int matrix[40][40];
+        std::string map_path;
     private:
 };
 
