@@ -10,7 +10,7 @@
 
 class Igames {
     public:
-        virtual ~Igames();
+        virtual ~Igames() = default;
 
     protected:
     private:
