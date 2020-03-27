@@ -14,23 +14,38 @@
 class Games : public Igames
 {
     public:
-        Games()
+        //Games() {};
+        int height = 40;
+        int width = 100;
+        int mat[40][100];
+        int posx;
+        int posy;
+        std::string name;
+        void key_event(int key)    // NEVER COLLIDES WITH 0 LAYER (WHICH IS WALLS)
         {
-            for (int i = 0; i < 40; i++) {
-                for (int j = 0; j < 30; j++) {
-                    if ( i < 3 || j < 3 || i > (40 - 3) || j > (30 - 3))
-                        mat[j][i] = 1;
-                }
+            if (key == KEY_UP && mat[posy - 1][posx] != 0) {
+                    mat[posy][posx] = 2;
+                    mat[posy - 1][posx] = 1;
+                    posy--;
             }
-        };
-        ~Games() {}
-        int height = 30;
-        int width = 40;
-        int mat[30][40];
+            if (key == KEY_DOWN && mat[posy + 1][posx] != 0) {
+                    mat[posy][posx] = 2;
+                    mat[posy + 1][posx] = 1;
+                    posy++;
+            }
+            if (key == KEY_LEFT && mat[posy][posx - 1] != 0) {
+                    mat[posy][posx] = 2;
+                    mat[posy][posx - 1] = 1;
+                    posx--;
+            }
+            if (key == KEY_RIGHT && mat[posy][posx + 1] != 0) {
+                    mat[posy][posx] = 2;
+                    mat[posy][posx + 1] = 1;
+                    posx++;
+            }
+        }
 
     protected:
-
-        std::string name;
     private:
 };
 

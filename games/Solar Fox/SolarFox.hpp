@@ -10,18 +10,14 @@
 
 #include<string>
 
-class SolarFox {
+class SolarFox : public Games
+{
     public:
-        SolarFox(const std::string lib);
+        SolarFox();//const std::string lib);
         void loop();
-        ~SolarFox();
-
+        ~SolarFox() {};
     protected:
         std::string lib;
-        int pos[2];
-        int width = 40;
-        int height = 30;
-        int matrix[30][40];
     private:
 };
 

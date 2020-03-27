@@ -11,6 +11,7 @@
 class Igames {
     public:
         virtual ~Igames() = default;
+        virtual void key_event(int key) = 0;
 
     protected:
     private:

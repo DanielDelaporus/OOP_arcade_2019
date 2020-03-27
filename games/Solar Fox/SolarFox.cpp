@@ -6,32 +6,26 @@
 */
 
 #include "SolarFox.hpp"
+#include "../Games.hpp"
 //#include "../lib/ncurse/.hpp"
 //#include "../lib/SFML/.hpp"
+#define WIDTH 100
+#define HEIGHT 40
 
-SolarFox::SolarFox(std::string library)
+SolarFox::SolarFox()
 {
-    lib = library;
-    pos[0] = 40 / 2;
-    pos[1] = 30 / 2;
-    matrix[pos[0]][pos[1]] = 1;
-    for (int i = 0; i < 40; i++) {
-        for (int j = 0; j < 30; j++) {
-            if ( i < 3 || j < 3 || i > (40 - 3) || j > (30 - 3))
-                matrix[j][i] = 4;
-        }
-    }
+    name = "SolarFox";
+    posx = WIDTH / 2;
+    posy = HEIGHT / 2;
+    for (int i = 0; i < WIDTH; i++)
+        for (int j = 0; j < HEIGHT; j++)
+            mat[j][i] = 0;
+    for (int i = 3; i < WIDTH - 3; i++)
+        for (int j = 3; j < HEIGHT - 3; j++)
+            mat[j][i] = 2;
+    mat[posy][posx] = 1;
 }
-
-SolarFox::~SolarFox()
-{
-}
-
 
 void SolarFox::loop()
 {
-    while (5) {
-        
-
-    }
 }

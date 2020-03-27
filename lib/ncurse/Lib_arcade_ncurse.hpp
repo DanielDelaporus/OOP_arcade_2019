@@ -25,9 +25,15 @@ class Lib_arcade_ncurse : public IgraphicLib {
         Lib_arcade_ncurse();
         ~Lib_arcade_ncurse();
         virtual void refresh(Games) override;
+        int key_event(int);
         virtual void clear() override;
+        WINDOW *GetWind() const { return wind; }
+            void assign_game(Games g){
+            game = g;
+        }
 
     protected:
+        Games game;
         WINDOW *wind;
     private:
 };
