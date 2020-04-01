@@ -6,7 +6,8 @@
 */
 
 #include "Lib_arcade_ncurse.hpp"
-#include "../../games/Solar Fox/SolarFox.cpp"
+#include "../../games/Solar Fox/Bullet.cpp"
+#include "../../games/Games.hpp"
 
 
 #define LEFTMARGINE 20
@@ -51,11 +52,11 @@ void printInColor(int index) {
     attroff(COLOR_PAIR(index + 1));
 }
 
-int Lib_arcade_ncurse::key_event(int key)
+int Lib_arcade_ncurse::key_events(int key, SolarFox *game)
 {
-
-    game.key_event(key);
-    this->refresh(game);
+    game->key_event(key, game);
+    this->assign_game(*game);
+    this->refresh(this->game);
     if (key == 27)
         return 84;
     return 0;
@@ -90,17 +91,20 @@ void Lib_arcade_ncurse::clear()
 
 int main (void)
 {
-    SolarFox fox;
+    SolarFox *fox = new SolarFox;
     int key = 0;
     Lib_arcade_ncurse *lib = new Lib_arcade_ncurse();
-    lib->assign_game((Games)fox);
+    lib->assign_game(*fox);
     keypad(stdscr, TRUE);
     noecho();
-    lib->refresh((Games)fox);  
-    while (1) {
-        if (lib->key_event(getch()) == 84)
+    lib->refresh(lib->game);
+    nodelay(lib->GetWind(), TRUE);
+    while (1000) {
+        if (lib->key_events(getch(), fox) == 84)
             break;
+        fox->loop(fox);
         refresh();
+        timeout(100);
     }
     endwin();
     return 0;

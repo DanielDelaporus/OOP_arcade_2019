@@ -9,14 +9,25 @@
 #define SOLARFOX_HPP_
 
 #include<string>
+#include<list>
+#include <algorithm>
+#include "Bullet.hpp"
+#include "../Games.hpp"
 
 class SolarFox : public Games
 {
     public:
         SolarFox();//const std::string lib);
-        void loop();
-        ~SolarFox() {};
+        void AddBullet(Bullet bul);
+
+        void loop(Games *game);
+        virtual void key_event(int key, SolarFox*);
+        ~SolarFox();
+        int playerdirx;
+        int playerdiry;
+
     protected:
+        std::list<Bullet> bullets;
         std::string lib;
     private:
 };
