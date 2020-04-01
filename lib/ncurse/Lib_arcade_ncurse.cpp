@@ -18,7 +18,7 @@ enum map {
     two = '*',
 };
 
-void printInColor(int index) {
+void Lib_arcade_ncurse::printInColor(int index) {
 
     init_pair(1, COLOR_BLACK, COLOR_CYAN);
     init_pair(2, COLOR_GREEN, COLOR_BLACK);
@@ -37,8 +37,16 @@ void printInColor(int index) {
     if (index == 0)
         printw("#");
 
-    if (index == 1)
-        printw("@");
+    if (index == 1) {
+        if (game.playerdiry == 1)
+            printw("v");
+        if (game.playerdiry == -1)
+            printw("^");
+        if (game.playerdirx == 1)
+            printw(">");
+        if (game.playerdirx == -1)
+            printw("<");
+    }
 
     if (index == 2)
         printw(" ");
@@ -93,6 +101,7 @@ int main (void)
 {
     SolarFox *fox = new SolarFox;
     int key = 0;
+    int time = 0;
     Lib_arcade_ncurse *lib = new Lib_arcade_ncurse();
     lib->assign_game(*fox);
     keypad(stdscr, TRUE);
@@ -102,9 +111,10 @@ int main (void)
     while (1000) {
         if (lib->key_events(getch(), fox) == 84)
             break;
-        fox->loop(fox);
+        fox->loop(fox, time);
+        time++;
         refresh();
-        timeout(100);
+        timeout(50);
     }
     endwin();
     return 0;

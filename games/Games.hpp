@@ -20,6 +20,8 @@ class Games : public Igames
         int mat[40][100];
         int posx;
         int posy;
+        int playerdirx;
+        int playerdiry;
         std::string name;
 
         void key_event(int key);

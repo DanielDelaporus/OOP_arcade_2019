@@ -38,7 +38,7 @@ void SolarFox::AddBullet(Bullet bul)
 }
 
 
-void SolarFox::loop(Games *game)
+void SolarFox::loop(Games *game, int deltatime)
 {
     std::list<Bullet>::iterator tmp = bullets.begin();
     for (; tmp != bullets.end(); tmp++) {
@@ -48,41 +48,37 @@ void SolarFox::loop(Games *game)
         else 
             game->mat[tmp->posy][tmp->posx] = 4;
     }
+    if (deltatime % 2 == 0) {
+        game->mat[posy][posx] = 2; //nothingness
+        if (game->mat[posy + playerdiry][posx + playerdirx] != 0) { //Un mur
+            game->mat[posy + playerdiry][posx + playerdirx] = 1;
+            posy += playerdiry;
+            posx += playerdirx;
+        }
+    }
 }
 
 void SolarFox::key_event(int key, SolarFox *game)    // NEVER COLLIDES WITH 0 LAYER (WHICH IS WALLS)
 {
-    if (key == KEY_UP && game->mat[game->posy - 1][game->posx] != 0) {
-        game->mat[game->posy][game->posx] = 2;
-        game->mat[game->posy - 1][game->posx] = 1;
-        game->posy--;
+    if (key == KEY_UP && game->mat[game->posy - 1][game->posx] != 0 && game->playerdiry != 1) {
         game->playerdirx = 0;
         game->playerdiry = -1;
     }
-    if (key == KEY_DOWN && game->mat[game->posy + 1][game->posx] != 0) {
-        game->mat[game->posy][game->posx] = 2;
-        game->mat[game->posy + 1][game->posx] = 1;
-        game->posy++;
+    if (key == KEY_DOWN && game->mat[game->posy + 1][game->posx] != 0 && game->playerdiry != -1) {
         game->playerdirx = 0;
         game->playerdiry = 1;
     }
-    if (key == KEY_LEFT && game->mat[game->posy][game->posx - 1] != 0) {
-        game->mat[game->posy][game->posx] = 2;
-        game->mat[game->posy][game->posx - 1] = 1;
-        game->posx--;
+    if (key == KEY_LEFT && game->mat[game->posy][game->posx - 1] != 0 && game->playerdirx != 1) {
         game->playerdiry = 0;
         game->playerdirx = -1;
     }
-    if (key == KEY_RIGHT && game->mat[game->posy][game->posx + 1] != 0) {
-        game->mat[game->posy][game->posx] = 2;
-        game->mat[game->posy][game->posx + 1] = 1;
-        game->posx++;
+    if (key == KEY_RIGHT && game->mat[game->posy][game->posx + 1] != 0 && game->playerdirx != -1) {
         game->playerdiry = 0;
         game->playerdirx = 1;
     }
     if (key == ' ') {
         Bullet *newbull = new Bullet(game->playerdirx, game->playerdiry, game->posx + game->playerdirx, game->posy + game->playerdiry);
-        game->mat[game->posx + game->playerdirx][game->posy + game->playerdiry] = 4;
+        game->mat[game->posy + game->playerdiry][game->posx + game->playerdirx] = 4;
         game->AddBullet(*newbull);
     }
 }

@@ -20,11 +20,10 @@ class SolarFox : public Games
         SolarFox();//const std::string lib);
         void AddBullet(Bullet bul);
 
-        void loop(Games *game);
+        void loop(Games *game, int deltatime);
         virtual void key_event(int key, SolarFox*);
         ~SolarFox();
-        int playerdirx;
-        int playerdiry;
+
 
     protected:
         std::list<Bullet> bullets;

@@ -33,6 +33,7 @@ class Lib_arcade_ncurse : public IgraphicLib {
         //int key_events(int, ANOTHER GAME*);
         //int key_events(int, ANOTHER GAME*);
 
+        void printInColor(int index);
         virtual void clear() override;
         WINDOW *GetWind() const { return wind; }
             void assign_game(Games g){
