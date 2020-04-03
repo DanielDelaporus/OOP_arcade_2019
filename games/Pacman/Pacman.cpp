@@ -15,9 +15,15 @@ Pacman::Pacman()
     // IDs :
     //      0 - empty
     //      1 - path
-    //      2 - wall
+    //      2 - path with player
     //      3 - path with coin
     //      4 - path with powerup
+    //      5 - wall vertical
+    //      6 - wall horizontal
+    //      7 - wall corner
+    //      8 - path with ghost
+    pos_x = 1;
+    pos_y = 1;
 }
 
 Pacman::~Pacman()
@@ -33,11 +39,23 @@ void Pacman::drawmap() const
     }
 }
 
-void move(int dir_x, int dir_y)
+void Pacman::move_player(int dir_x, int dir_y)
 {
-    (void) dir_x;
-    (void) dir_y;
-    return;
+    pos_x += dir_x;
+    pos_y += dir_y;
+}
+
+int_x4 Pacman::get_allowed_moves() const
+{
+    int_x4 allowed_moves = {0, 0, 0, 0};
+    if (matrix[pos_x][pos_y + 1] != 5 && matrix[pos_x][pos_y + 1] != 6 && matrix[pos_x][pos_y + 1] != 7)
+        allowed_moves.up = 1;
+    if (matrix[pos_x + 1][pos_y] != 5 && matrix[pos_x + 1][pos_y] != 6 && matrix[pos_x + 1][pos_y] != 7)
+        allowed_moves.right = 1;
+    if (matrix[pos_x][pos_y - 1] != 5 && matrix[pos_x][pos_y - 1] != 6 && matrix[pos_x][pos_y - 1] != 7)
+        allowed_moves.down = 1;
+    if (matrix[pos_x - 1][pos_y] != 5 && matrix[pos_x - 1][pos_y] != 6 && matrix[pos_x - 1][pos_y] != 7)
+        allowed_moves.left = 1;
 }
 
 int main()
@@ -45,11 +63,11 @@ int main()
     sf::RenderWindow window(sf::VideoMode(400, 400), "Pacman");
     window.setFramerateLimit(5);
     
-    sf::RectangleShape box(sf::Vector2f(20, 20));
-    box.setFillColor(sf::Color::Red);
+    sf::RectangleShape wall(sf::Vector2f(20, 20));
+    wall.setFillColor(sf::Color::Black);
 
-    sf::RectangleShape apple(sf::Vector2f(20, 20));
-    apple.setFillColor(sf::Color::Green);
+    sf::RectangleShape player(sf::Vector2f(20, 20));
+    player.setFillColor(sf::Color::Yellow);
     
     sf::Clock timer;
 
@@ -71,26 +89,27 @@ int main()
             timer.restart();
         }
         if (event.type == sf::Event::KeyReleased) {
-            if (event.key.code == sf::Keyboard::E) {
+            int_x4 allowed_moves = game.get_allowed_moves();
+            if (event.key.code == sf::Keyboard::Up && allowed_moves.up = 1) {
                 dir_x = 0;
                 dir_y = 1;
             }
-            if (event.key.code == sf::Keyboard::Down) {
+            if (event.key.code == sf::Keyboard::Down && allowed_moves.down = 1) {
                 dir_x = 0;
                 dir_y = -1;
             }
-            if (event.key.code == sf::Keyboard::Right) {
+            if (event.key.code == sf::Keyboard::Right && allowed_moves.right = 1) {
                 dir_x = 1;
                 dir_y = 0;
             }
-            if (event.key.code == sf::Keyboard::Left) {
+            if (event.key.code == sf::Keyboard::Left && allowed_moves.left = 1) {
                 dir_x = -1;
                 dir_y = 0;
             }
         }
-        move(dir_x, dir_y);
+        game.move_player(dir_x, dir_y);
         window.clear();
-
+        window.draw(player);
         window.display();
     }
     window.close();

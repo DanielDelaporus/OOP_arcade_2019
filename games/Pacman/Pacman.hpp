@@ -24,11 +24,12 @@ class Pacman : public Igames {
         Pacman();
         ~Pacman();
         void drawmap() const;
-        void move(int, int);
+        void move_player(int, int);
         int_x4 get_allowed_moves() const;
 
     protected:
-        int pos[2];
+        int pos_x;
+        int pos_y;
         int matrix[40][40];
         std::string map_path;
     private:
