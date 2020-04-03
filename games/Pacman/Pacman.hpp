@@ -9,12 +9,23 @@
 #define PACMAN_HPP_
 
 #include <iostream>
+#include "../Igames.hpp"
 
-class Pacman {
+struct int_x4
+{
+    int up;
+    int right;
+    int down;
+    int left;
+};
+
+class Pacman : public Igames { 
     public:
         Pacman();
         ~Pacman();
         void drawmap() const;
+        void move(int, int);
+        int_x4 get_allowed_moves() const;
 
     protected:
         int pos[2];
