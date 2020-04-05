@@ -28,25 +28,25 @@ Event Lib_arcade_sfml::Keypressed(){
     {
         if (event.type == sf::Event::Closed || (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape))
             window->close();
-    }
-    if (event.type == sf::Event::KeyPressed)
-    {
-        if (event.key.code == sf::Keyboard::Up)
-            return Event::UP;
-        if (event.key.code == sf::Keyboard::Down)
-            return Event::DOWN;
-        if (event.key.code == sf::Keyboard::Right)
-            return Event::RIGHT;
-        if (event.key.code == sf::Keyboard::Left)
-            return Event::LEFT;
-        if (event.key.code == sf::Keyboard::PageUp)
-            return Event::SHOOT;
-        if (event.key.code == sf::Keyboard::O)
-            return Event::NEXT_GAME;
-        if (event.key.code == sf::Keyboard::P)
-            return Event::NEXT_GRAPH;
-        if (event.key.code == sf::Keyboard::Escape || !window->isOpen())
-            return Event::QUIT;
+        if (event.type == sf::Event::KeyPressed)
+        {
+            if (event.key.code == sf::Keyboard::Up)
+                return Event::UP;
+            if (event.key.code == sf::Keyboard::Down)
+                return Event::DOWN;
+            if (event.key.code == sf::Keyboard::Right)
+                return Event::RIGHT;
+            if (event.key.code == sf::Keyboard::Left)
+                return Event::LEFT;
+            if (event.key.code == sf::Keyboard::Space)
+                return Event::SHOOT;
+            if (event.key.code == sf::Keyboard::O)
+                return Event::NEXT_GAME;
+            if (event.key.code == sf::Keyboard::P)
+                return Event::NEXT_GRAPH;
+            if (event.key.code == sf::Keyboard::Escape || !window->isOpen())
+                return Event::QUIT;
+        }
     }
     return Event::ENTER;
 }
