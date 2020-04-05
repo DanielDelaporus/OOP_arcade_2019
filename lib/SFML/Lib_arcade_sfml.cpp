@@ -76,12 +76,12 @@ void Lib_arcade_sfml::refresh(Games game)
 {
     clear();
     assign_game(game);
-    sf::RectangleShape box(sf::Vector2f(40, 40));
+    sf::RectangleShape box(sf::Vector2f(7, 7));
     if (game.name != "Select") 
     {
         for (int i = 0; i < game.height; i++)    {
             for (int j = 0; j < game.width; j++) {
-                box.setPosition(j * 5, i * 5);
+                box.setPosition(j * 7, i * 7);
                 //box.setFillColor(sf::Color::Red);
                 printInColor(game.mat[i][j], box);
                 window->draw(box);
