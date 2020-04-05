@@ -26,8 +26,8 @@
 
 Pacman::Pacman(std::string const path)
 {
-    Blinky = new Ghost(1 ,1);
-    Pinky = new Ghost(2 ,1);
+    Blinky = new Ghost(13 ,14);
+    Pinky = new Ghost(15 ,14);
     game = new Games();
 
     game->name = "Pacman";
@@ -53,30 +53,36 @@ Pacman::Pacman(std::string const path)
     for (i = 0; i < 40; i++)
         for (j = 0; j < 40; j++)
             game->mat[i][j] = 0;
-    j = 0;
+    i = 0;
     if (myfile.is_open()) {
         while (!myfile.eof()) {
             getline(myfile, line);
-            for (i = 0; i < 28; i++) {
-                line[i] == '0' ? game->mat[i][j] = 0 : rs = 0;
-                line[i] == ' ' ? game->mat[i][j] = 1 : rs = 0;
-                line[i] == 'P' ? game->mat[i][j] = 2 : rs = 0;
-                line[i] == '.' ? game->mat[i][j] = 3 : rs = 0;
-                line[i] == 'o' ? game->mat[i][j] = 4 : rs = 0;
-                line[i] == '|' ? game->mat[i][j] = 5 : rs = 0;
-                line[i] == '-' ? game->mat[i][j] = 6 : rs = 0;
-                line[i] == '+' ? game->mat[i][j] = 7 : rs = 0;
-                line[i] == 'A' ? game->mat[i][j] = 8 : rs = 0;
+            for (j = 0; j < 28; j++) {
+                line[j] == '0' ? game->mat[i][j] = 0 : rs = 0;
+                line[j] == ' ' ? game->mat[i][j] = 1 : rs = 0;
+                line[j] == 'P' ? game->mat[i][j] = 2 : rs = 0;
+                line[j] == '.' ? game->mat[i][j] = 3 : rs = 0;
+                line[j] == 'o' ? game->mat[i][j] = 4 : rs = 0;
+                line[j] == '|' ? game->mat[i][j] = 5 : rs = 0;
+                line[j] == '-' ? game->mat[i][j] = 6 : rs = 0;
+                line[j] == '+' ? game->mat[i][j] = 7 : rs = 0;
+                line[j] == 'A' ? game->mat[i][j] = 8 : rs = 0;
             }
-            j++;
+            i++;
         }
     }
+    /*
     while (game->mat[game->posx][game->posy] == 0 || game->mat[game->posx][game->posy] == 5 || game->mat[game->posx][game->posy] == 6 || game->mat[game->posx][game->posy] == 7) {
         std::srand(std::time(nullptr));
         game->posx = std::rand() % 26 + 1;
         game->posy = std::rand() % 26 + 1;
     }
-    game->mat[game->posx][game->posy] = 2;
+    */
+    game->posx = 1;
+    game->posy = 1;
+    game->mat[game->posy][game->posx] = 2;
+    update_ghost();
+    drawmap();
 }
 
 Pacman::~Pacman()
@@ -88,8 +94,8 @@ void Pacman::drawmap() const
     int rs;
     char c;
 
-    for (int j = 0; j < 40; j++) {
-        for (int i = 0; i < 40; i++) {
+    for (int i = 0; i < 40; i++) {
+        for (int j = 0; j < 40; j++) {
             game->mat[i][j] == 0 ? c = ' ' : rs = 0;
             game->mat[i][j] == 1 ? c = ' ' : rs = 0;
             game->mat[i][j] == 2 ? c = 'P' : rs = 0;
@@ -107,33 +113,33 @@ void Pacman::drawmap() const
 
 void Pacman::move_player()
 {
-    if (game->playerdiry == 1 && (game->mat[game->posx][game->posy + 1] == 5 || game->mat[game->posx][game->posy + 1] == 6 || game->mat[game->posx][game->posy + 1] == 7))
+    if (game->playerdirx == 1 && get_allowed_moves(game->posx, game->posy).right == 0)
         return;
-    if (game->playerdiry == -1 && (game->mat[game->posx][game->posy - 1] == 5 || game->mat[game->posx][game->posy - 1] == 6 || game->mat[game->posx][game->posy - 1] == 7))
+    if (game->playerdirx == -1 && get_allowed_moves(game->posx, game->posy).left == 0)
         return;
-    if (game->playerdirx == 1 && (game->mat[game->posx + 1][game->posy] == 5 || game->mat[game->posx + 1][game->posy] == 6 || game->mat[game->posx + 1][game->posy] == 7))
+    if (game->playerdiry == 1 && get_allowed_moves(game->posx, game->posy).down == 0)
         return;
-    if (game->playerdirx == -1 && (game->mat[game->posx - 1][game->posy] == 5 || game->mat[game->posx - 1][game->posy] == 6 || game->mat[game->posx - 1][game->posy] == 7))
+    if (game->playerdiry == -1 && get_allowed_moves(game->posx, game->posy).up == 0)
         return;
 
-    game->mat[game->posx][game->posy] = 1;
+    game->mat[game->posy][game->posx] = 1;
 
     game->posx += game->playerdirx;
     game->posy += game->playerdiry;
 
-    if (game->mat[game->posx][game->posy] == 3)
+    if (game->mat[game->posy][game->posx] == 3)
         game->score++;
-    game->mat[game->posx][game->posy] = 2;
+    game->mat[game->posy][game->posx] = 2;
 }
 
 int_x4 Pacman::get_allowed_moves(int x, int y)
 {
     int_x4 allowed_moves = {0, 0, 0, 0};
 
-    allowed_moves.down = (game->mat[x][y + 1] == 5 || game->mat[x][y + 1] == 6 || game->mat[x][y + 1] == 7) ? 0 : 1;
-    allowed_moves.right = (game->mat[x + 1][y] == 5 || game->mat[x + 1][y] == 6 || game->mat[x + 1][y] == 7) ? 0 : 1;
-    allowed_moves.up = (game->mat[x][y - 1] == 5 || game->mat[x][y - 1] == 6 || game->mat[x][y - 1] == 7) ? 0 : 1;
-    allowed_moves.left = (game->mat[x - 1][y] == 5 || game->mat[x - 1][y] == 6 || game->mat[x - 1][y] == 7) ? 0 : 1;
+    allowed_moves.right      = (game->mat[y][x + 1] == 5 || game->mat[y][x + 1] == 6 || game->mat[y][x + 1] == 7) ? 0 : 1;
+    allowed_moves.down       = (game->mat[y + 1][x] == 5 || game->mat[y + 1][x] == 6 || game->mat[y + 1][x] == 7) ? 0 : 1;
+    allowed_moves.left       = (game->mat[y][x - 1] == 5 || game->mat[y][x - 1] == 6 || game->mat[y][x - 1] == 7) ? 0 : 1;
+    allowed_moves.up         = (game->mat[y - 1][x] == 5 || game->mat[y - 1][x] == 6 || game->mat[y - 1][x] == 7) ? 0 : 1;
 
     return allowed_moves;
 }
@@ -165,18 +171,26 @@ void Pacman::key_event(int key)
 
 void Pacman::update_ghost()
 {
-    Blinky->move(get_allowed_moves(Blinky->get_x(), Blinky->get_y()));
-    Pinky->move(get_allowed_moves(Pinky->get_x(), Pinky->get_y()));
+    game->mat[Blinky->get_y()][Blinky->get_x()] = Blinky->get_last_path();
+    game->mat[Pinky->get_y()][Pinky->get_x()] = Pinky->get_last_path();
+
+    Blinky->move(get_allowed_moves(Blinky->get_x(), Blinky->get_y()), game->mat[Blinky->get_y()][Blinky->get_x()]);
+    Pinky->move(get_allowed_moves(Pinky->get_x(), Pinky->get_y()), game->mat[Pinky->get_y()][Pinky->get_x()]);
+
+    game->mat[Blinky->get_y()][Blinky->get_x()] = 8;
+    game->mat[Pinky->get_y()][Pinky->get_x()] = 8;
 }
 
 int Pacman::loop(int deltatime)
 {
+    if ((deltatime % 2) == 0)
+        return 0;
     update_ghost();
     move_player();
     (void) deltatime;
-    if (game->posx == Blinky->get_x() && game->posy == Blinky->get_y())
+    if (game->posy == Blinky->get_x() && game->posx == Blinky->get_y())
         return 1;
-    if (game->posx == Pinky->get_x() && game->posy == Pinky->get_y())
+    if (game->posy == Pinky->get_x() && game->posx == Pinky->get_y())
         return 1;
     return 0;
 }
@@ -187,9 +201,15 @@ Games Pacman::GetGame()
 }
 
 extern "C" Igames* create() {
-    return new Pacman("map1.pmap");
+    return new Pacman("games/Pacman/map1.pmap");
 }
 
 extern "C" void destroy(Igames* p) {
     delete p;
+}
+
+int main()
+{
+    Pacman game("map1.pmap");
+    game.drawmap();
 }

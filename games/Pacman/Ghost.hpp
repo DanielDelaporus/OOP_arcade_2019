@@ -18,15 +18,17 @@ class Ghost {
     public:
         Ghost(int, int);
         ~Ghost();
-        void move(int_x4);
+        void move(int_x4, int);
         int get_x();
         int get_y();
+        char get_last_path();
 
     protected:
         int posx;
         int posy;
         int dirx;
         int diry;
+        char last_path;
 };
 
 #endif /* !GHOST_HPP_ */

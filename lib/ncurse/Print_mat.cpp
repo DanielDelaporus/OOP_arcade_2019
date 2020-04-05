@@ -85,8 +85,8 @@ void printPac(int index, Games game)
                 printw("^");
             if (game.playerdirx == 1)
                 printw(">");
-            if (game.playerdirx == -1)
-                printw("<");                        //Walls
+            if (game.playerdirx == -1 || (game.playerdirx == 0 && game.playerdiry == 0))
+                printw("<");                     //Walls
             break;
         case 3:
             printw("*");                     //Walls
@@ -124,23 +124,23 @@ void printSelect(Games game)
     init_pair(2, COLOR_BLACK, COLOR_WHITE);
 
 
-    move(25, 20);
+    move(25, 50);
     attron(COLOR_PAIR((game.posx == 0) + 1));
     printw("---SolarFox---");
     attroff(COLOR_PAIR((game.posx == 0) + 1));
 
 
-    move(27, 20);
+    move(27, 50);
     attron(COLOR_PAIR((game.posx != 0) + 1));
     printw("--- Pacman ---");
     attroff(COLOR_PAIR((game.posx != 0) + 1));
 
-    move(25, 35);
+    move(25, 75);
     attron(COLOR_PAIR((game.posy == 0) + 1));
     printw("---ncurse---");
     attroff(COLOR_PAIR((game.posy == 0) + 1));
 
-    move(27, 35);
+    move(27, 75);
     attron(COLOR_PAIR((game.posy != 0) + 1));
     printw("---SFML---");
     attroff(COLOR_PAIR((game.posy != 0) + 1));

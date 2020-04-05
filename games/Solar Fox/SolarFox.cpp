@@ -88,8 +88,11 @@ int SolarFox::loop(int deltatime)
     for (; tmp != bullets.end(); tmp++) {
         game->mat[tmp->posy][tmp->posx] = 2; //Turns into nothingness
         int ret = tmp->move(game->mat[tmp->posy + tmp->diry][tmp->posx +tmp->dirx]);
-        if (ret != 0) 
+        if (ret != 0){
+            if (ret == 2)
+                return 1;
             tmp->~Bullet();
+        }
         else {
             if (game->mat[tmp->posy + tmp->diry][tmp->posx +tmp->dirx] == 6 && tmp->FromEnemy == 0)
                 game->score++;

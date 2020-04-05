@@ -40,6 +40,10 @@ Event Lib_arcade_ncurse::Keypressed(){
     timeout(25);
     if (key == KEY_UP)
         return Event::UP;
+    if (key == 'o')
+        return Event::NEXT_GAME;
+    if (key == 'p')
+        return Event::NEXT_GRAPH;
     if (key == KEY_DOWN)
         return Event::DOWN;
     if (key == KEY_LEFT)
@@ -100,32 +104,6 @@ void Lib_arcade_ncurse::endgame()
         }
     }
 }
-
-
-
-//int main (void)
-//{
-//    SelectScreen *fox = new SelectScreen;
-//    int key = 0;
-//    int time = 0;
-//    Lib_arcade_ncurse *lib = new Lib_arcade_ncurse();
-//    lib->assign_game(*fox->game);
-//    lib->refresh(lib->game);
-//    while (1000) {
-//        Event nowkey = lib->Keypressed();
-//        if (nowkey == Event::QUIT)
-//            break;
-//        else
-//            fox->key_event(nowkey);
-//        if (fox->loop(time))
-//            break;
-//        time++;
-//        lib->refresh(*fox->game);
-//    }
-//    lib->endgame();
-//    lib->~Lib_arcade_ncurse();
-//    return 0;
-//}
 
 extern "C" IgraphicLib* create() {
     return new Lib_arcade_ncurse;
