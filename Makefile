@@ -5,18 +5,6 @@
 ## Makefile to build project
 ##
 
-CC		=	g++
-
-FLAGS		=	-Werror -Wall -Wextra
-
-SRC_CORE	=
-
-HEADER		=	./arcade
-
-OBJ     	=       $(SRC_CORE:.cpp=.o)
-
-NAME    	=       MyGKrellm_ncurses
-
 all:		graphicals games core
 
 core:
@@ -29,6 +17,7 @@ games:
 
 graphicals:
 			make -C lib/ncurse/
+			make -C lib/SFML/
 
 clean:
 			make clean -C lib/ncurse
@@ -36,6 +25,7 @@ clean:
 			make clean -C games/Pacman/
 			make clean -C Core/
 			make clean -C games/Select/
+			make clean -C lib/SFML/
 
 fclean:		clean
 			make fclean -C lib/ncurse
@@ -43,6 +33,7 @@ fclean:		clean
 			make fclean -C games/Pacman/
 			make fclean -C Core/
 			make fclean -C games/Select/
+			make fclean -C lib/SFML/
 
 re:			fclean all
 
