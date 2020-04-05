@@ -96,21 +96,30 @@ int main(int argc, char **argv)
         if (nowkey == Event::QUIT)
             break;
         else if (nowkey == Event::NEXT_GRAPH){
-
-            if (which_lib) 
+            destroy_graph(lib);
+            if (which_lib) {
                 create_graph = lib_constructor("./lib/lib_arcade_ncurse.so");
-            else 
+                which_lib = 0;
+            }
+            else {
                 create_graph = lib_constructor("./lib/lib_arcade_sfml.so");
+                which_lib = 1;
+            }
             lib = create_graph();
             lib->assign_game(fox->GetGame());
             lib->refresh(fox->GetGame());
 
         }
          else if (nowkey == Event::NEXT_GAME){
-            if (which_game == 0) 
+            destroy_game(fox);
+            if (which_game == 0) {
                 create_game = lib_gconstructor("./games/lib_arcade_pacman.so");
-            else 
+                which_game = 1;
+            }
+            else {
                 create_game = lib_gconstructor("./games/lib_arcade_solarfox.so");
+                which_game = 0;
+            }
             fox = create_game();
             time = 0;
             lib->assign_game(fox->GetGame());
