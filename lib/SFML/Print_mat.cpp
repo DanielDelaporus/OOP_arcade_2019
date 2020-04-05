@@ -46,31 +46,31 @@ void printPac(int index, Games game, sf::RectangleShape &box)
     switch (index)
     {
         case 0:
-            box.setFillColor(sf::Color::Cyan);                      //Walls
+            box.setFillColor(sf::Color::Black);                      //Walls
             break;
         case 1:
             box.setFillColor(sf::Color::Black);                   //Walls
             break;
         case 2:
-            box.setFillColor(sf::Color::White);                     //Walls
-            break;
-        case 3:
-            box.setFillColor(sf::Color::Blue);                     //Walls
-            break;
-        case 4:
             box.setFillColor(sf::Color::Green);                     //Walls
             break;
-        case 5:
+        case 3:
             box.setFillColor(sf::Color::Yellow);                     //Walls
             break;
+        case 4:
+            box.setFillColor(sf::Color::Magenta);                     //Walls
+            break;
+        case 5:
+            box.setFillColor(sf::Color::Blue);                     //Walls
+            break;
         case 6:
-            box.setFillColor(sf::Color::Red);                     //Walls
+            box.setFillColor(sf::Color::Blue);                     //Walls
             break;
         case 7:
-            box.setFillColor(sf::Color::Black);                   //Walls
+            box.setFillColor(sf::Color::Blue);                   //Walls
             break;
         case 8:
-            box.setFillColor(sf::Color::Magenta);                    //Walls
+            box.setFillColor(sf::Color::Red);                    //Walls
             break;
         
         default:
