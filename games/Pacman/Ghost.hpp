@@ -18,9 +18,12 @@ class Ghost {
     public:
         Ghost(int, int);
         ~Ghost();
-        void move(int_x4, int);
+        void move(int_x4);
         int get_x();
         int get_y();
+        int get_dirx();
+        int get_diry();
+        void set_last_path(int);
         char get_last_path();
 
     protected:

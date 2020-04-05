@@ -71,18 +71,13 @@ Pacman::Pacman(std::string const path)
             i++;
         }
     }
-    /*
-    while (game->mat[game->posx][game->posy] == 0 || game->mat[game->posx][game->posy] == 5 || game->mat[game->posx][game->posy] == 6 || game->mat[game->posx][game->posy] == 7) {
+    while (game->mat[game->posy][game->posx] == 0 || game->mat[game->posy][game->posx] == 1 || game->mat[game->posy][game->posx] == 5 || game->mat[game->posy][game->posx] == 6 || game->mat[game->posy][game->posx] == 7) {
         std::srand(std::time(nullptr));
         game->posx = std::rand() % 26 + 1;
         game->posy = std::rand() % 26 + 1;
     }
-    */
-    game->posx = 1;
-    game->posy = 1;
     game->mat[game->posy][game->posx] = 2;
     update_ghost();
-    drawmap();
 }
 
 Pacman::~Pacman()
@@ -171,26 +166,30 @@ void Pacman::key_event(int key)
 
 void Pacman::update_ghost()
 {
-    game->mat[Blinky->get_y()][Blinky->get_x()] = Blinky->get_last_path();
-    game->mat[Pinky->get_y()][Pinky->get_x()] = Pinky->get_last_path();
+    int old_x = Blinky->get_x();
+    int old_y = Blinky->get_y();
+    int c = Blinky->get_last_path();
 
-    Blinky->move(get_allowed_moves(Blinky->get_x(), Blinky->get_y()), game->mat[Blinky->get_y()][Blinky->get_x()]);
-    Pinky->move(get_allowed_moves(Pinky->get_x(), Pinky->get_y()), game->mat[Pinky->get_y()][Pinky->get_x()]);
+    Blinky->move(get_allowed_moves(Blinky->get_x(), Blinky->get_y()));
 
+    Blinky->set_last_path(game->mat[Blinky->get_y()][Blinky->get_x()]);
+
+    game->mat[old_y][old_x] = c;
     game->mat[Blinky->get_y()][Blinky->get_x()] = 8;
-    game->mat[Pinky->get_y()][Pinky->get_x()] = 8;
 }
 
 int Pacman::loop(int deltatime)
 {
-    if ((deltatime % 2) == 0)
+    if (deltatime % 2 == 0)
         return 0;
+    if (Blinky->get_last_path() == 2)
+        return 1;
+    if (game->score >= 215)
+        return 1;
     update_ghost();
     move_player();
     (void) deltatime;
     if (game->posy == Blinky->get_x() && game->posx == Blinky->get_y())
-        return 1;
-    if (game->posy == Pinky->get_x() && game->posx == Pinky->get_y())
         return 1;
     return 0;
 }
