@@ -26,7 +26,7 @@
 
 Pacman::Pacman(std::string const path)
 {
-    Blinky = new Ghost(13 ,14);
+    Blinky = new Ghost(13 ,12);
     Pinky = new Ghost(15 ,14);
     game = new Games();
 
@@ -180,7 +180,7 @@ void Pacman::update_ghost()
 
 int Pacman::loop(int deltatime)
 {
-    if (deltatime % 2 == 0)
+    if (deltatime % 2 == 0 || deltatime % 3 == 0)
         return 0;
     if (Blinky->get_last_path() == 2)
         return 1;
