@@ -9,7 +9,11 @@
 #define PACMAN_HPP_
 
 #include <iostream>
+#include "Ghost.hpp"
 #include "../Igames.hpp"
+#include "../Games.hpp"
+
+class Ghost;
 
 struct int_x4
 {
@@ -19,20 +23,22 @@ struct int_x4
     int left;
 };
 
-class Pacman : public Igames { 
+class Pacman : public Igames {
     public:
-        Pacman();
+        Pacman(std::string const);
         ~Pacman();
         void drawmap() const;
-        void move_player(int, int);
-        int_x4 get_allowed_moves() const;
+        void move_player();
+        void update_ghost();
+        void key_event(int);
+        int loop(int);
+        Games GetGame();
+        int_x4 get_allowed_moves(int, int);
 
     protected:
-        int pos_x;
-        int pos_y;
-        int matrix[40][40];
-        std::string map_path;
-    private:
+        Games *game;
+        Ghost *Blinky;
+        Ghost *Pinky;
 };
 
 #endif /* !PACMAN_HPP_ */

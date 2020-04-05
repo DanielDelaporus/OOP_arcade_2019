@@ -12,22 +12,33 @@
 #include<list>
 #include <algorithm>
 #include "Bullet.hpp"
+#include "Enemy.hpp"
+#include "../Igames.hpp"
 #include "../Games.hpp"
 
-class SolarFox : public Games
+class SolarFox : public Igames
 {
     public:
         SolarFox();//const std::string lib);
         void AddBullet(Bullet bul);
+        void MakeADiamond(int cx, int cy, Games*);
 
-        void loop(Games *game, int deltatime);
-        virtual void key_event(int key, SolarFox*);
+        int loop(int deltatime);
+        virtual void key_event(int) override;//, SolarFox*);
         ~SolarFox();
 
+        virtual Games GetGame() override {return *game;};
+        Enemy *upEnemy;
+        Enemy *downEnemy;
+        Enemy *leftEnemy;
+        Games *game;
+        Enemy *rightEnemy;
 
     protected:
         std::list<Bullet> bullets;
         std::string lib;
+
+
     private:
 };
 

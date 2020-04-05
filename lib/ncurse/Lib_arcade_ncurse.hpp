@@ -18,7 +18,7 @@
 #include <thread>
 #include <chrono>
 
-#include "../../games/Solar Fox/SolarFox.cpp"
+//#include "../../games/Solar Fox/SolarFox.cpp"
 #include "../IgraphicLib.hpp"
 
 class Lib_arcade_ncurse : public IgraphicLib {
@@ -26,17 +26,20 @@ class Lib_arcade_ncurse : public IgraphicLib {
         Lib_arcade_ncurse();
         ~Lib_arcade_ncurse();
         virtual void refresh(Games) override;
-        int key_events(int, SolarFox*);
-
-        //int key_events(int, ANOTHER GAME*);
-        //int key_events(int, ANOTHER GAME*);
-        //int key_events(int, ANOTHER GAME*);
-        //int key_events(int, ANOTHER GAME*);
 
         void printInColor(int index);
+
         virtual void clear() override;
+
+        virtual void endgame() override;
+
+        virtual void init(int x, int y) override;
+        virtual Event Keypressed() override;
+        virtual void destroy() override;
+
         WINDOW *GetWind() const { return wind; }
-            void assign_game(Games g){
+
+        void assign_game(Games g){
             game = g;
         }
         Games game;
@@ -45,5 +48,6 @@ class Lib_arcade_ncurse : public IgraphicLib {
         WINDOW *wind;
     private:
 };
+
 
 #endif /* !LIB_ARCADE_NCURSE_HPP_ */

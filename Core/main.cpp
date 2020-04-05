@@ -6,17 +6,70 @@
 */
 
 #include <iostream>
+#include "../games/Igames.hpp"
+#include "../lib/IgraphicLib.hpp"
+#include "lib_graph_handle.hpp"
+#include "lib_games_handle.hpp"
+
 #define PRINTER(x) std::cout << x << std::endl;
 
-int load_lib()
+#include <filesystem>
+
+/*
+std::vector<std::string> &game_list()
 {
     
 }
 
+std::vector<std::string> &graph_lib_list()
+{
+
+}
+
+
+int launch_menu(std::string lib_core)
+{
+    return 0;
+}
+*/
+
 int main(int argc, char **argv)
 {
+    std::string lib_core;
     if (argc != 2) {
-        PRINTER("fvgsdfvxwv")
-        return 84;
+        std::cout << "Usage: ./arcade path_to_lib/lib.so" << std::endl;
+        return 0;
     }
+
+    lib_core = argv[1];
+
+    createg_t *create_game = lib_gconstructor("./games/lib_arcade_SolarFox.so");
+    destroyg_t *destroy_game = lib_gdestructor("./games/lib_arcade_SolarFox.so");
+    Igames *fox = create_game();
+
+    create_t *create_graph = lib_constructor("./lib/lib_arcade_ncurse.so");
+    destroy_t *destroy_graph = lib_destructor("./lib/lib_arcade_ncurse.so");
+    IgraphicLib *lib = create_graph();
+    
+    
+    int time = 0;
+
+    lib->assign_game(fox->GetGame());
+    lib->refresh(fox->GetGame());
+    while (1000) {
+        Event nowkey = lib->Keypressed();
+        if (nowkey == Event::QUIT)
+            break;
+        else
+            fox->key_event(nowkey);
+        if (fox->loop(time))
+            break;
+        time++;
+        lib->refresh(fox->GetGame());
+    }
+    lib->endgame();
+    destroy_graph(lib);
+    destroy_game(fox);
+
+    return 0;
 }

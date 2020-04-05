@@ -6,116 +6,131 @@
 */
 
 #include "Lib_arcade_ncurse.hpp"
-#include "../../games/Solar Fox/Bullet.cpp"
-#include "../../games/Games.hpp"
+//#include "../../games/Solar Fox/Bullet.cpp"
+//#include "../../games/Games.hpp"
+#include "../../games/Select/SelectScreen.hpp"
+#include <string>
+#include "Print_mat.cpp"
 
 
-#define LEFTMARGINE 20
+#define LEFTMARGINE 40
 
-enum map {
-    zero = '$',
-    one = '#',
-    two = '*',
-};
 
 void Lib_arcade_ncurse::printInColor(int index) {
 
-    init_pair(1, COLOR_BLACK, COLOR_CYAN);
-    init_pair(2, COLOR_GREEN, COLOR_BLACK);
-    init_pair(3, COLOR_CYAN, COLOR_BLACK);
-    init_pair(4, COLOR_BLUE, COLOR_BLACK);
-    init_pair(5, COLOR_RED, COLOR_BLACK);
 
     if (!has_colors()) {
         printw("terminal doesn't support colors");
         getch();
     }
     start_color();
-    
-    attron(COLOR_PAIR(index + 1));
 
-    if (index == 0)
-        printw("#");
+    if (game.name == "SolarFox")
+        printSolar(index, game);
+    if (game.name == "Pacman")
+        printPac(index, game);
 
-    if (index == 1) {
-        if (game.playerdiry == 1)
-            printw("v");
-        if (game.playerdiry == -1)
-            printw("^");
-        if (game.playerdirx == 1)
-            printw(">");
-        if (game.playerdirx == -1)
-            printw("<");
-    }
-
-    if (index == 2)
-        printw(" ");
-
-    if (index == 4)
-        printw("*");
-
-    if (index == 5)
-        printw("*");
-
-    attroff(COLOR_PAIR(index + 1));
 }
 
-int Lib_arcade_ncurse::key_events(int key, SolarFox *game)
-{
-    game->key_event(key, game);
-    this->assign_game(*game);
-    this->refresh(this->game);
+void ref(){ refresh();}
+
+Event Lib_arcade_ncurse::Keypressed(){
+    assign_game(game);
+    int key = getch();
+    timeout(25);
+    if (key == KEY_UP)
+        return Event::UP;
+    if (key == KEY_DOWN)
+        return Event::DOWN;
+    if (key == KEY_LEFT)
+        return Event::LEFT;
+    if (key == KEY_RIGHT)
+        return Event::RIGHT;
+    if (key == ' ')
+        return Event::SHOOT;
     if (key == 27)
-        return 84;
-    return 0;
+        return Event::QUIT;
+    return Event::ENTER;
 }
 
-Lib_arcade_ncurse::Lib_arcade_ncurse() : wind(initscr())
-{
-}
-
-Lib_arcade_ncurse::~Lib_arcade_ncurse()
-{
-    endwin();
-}
-
+void Lib_arcade_ncurse::destroy(){ endwin();}
+void Lib_arcade_ncurse::init(int x, int y){(void)x; (void)y; wind = initscr();}
+Lib_arcade_ncurse::Lib_arcade_ncurse(){ init(0, 0); keypad(stdscr, TRUE); noecho(); nodelay(wind, TRUE); }
+Lib_arcade_ncurse::~Lib_arcade_ncurse(){ destroy();}
+void Lib_arcade_ncurse::clear(){ erase();}
 
 void Lib_arcade_ncurse::refresh(Games game)
 {
     clear();
-    for (int i = 0; i < game.height; i++)    {
-        for (int j = 0; j < game.width; j++) {
-            move(5+i, LEFTMARGINE+j);
-            printInColor(game.mat[i][j]);
+    assign_game(game);
+    if (game.name != "Select") 
+    {
+        for (int i = 0; i < game.height; i++)    {
+            for (int j = 0; j < game.width; j++) {
+                move(5+i, LEFTMARGINE+j);
+                printInColor(game.mat[i][j]);
+            }
+        }
+        move(45, (LEFTMARGINE/2) + 64);
+        printw("Score : ");
+        printw(std::to_string(game.score).data());
+    }
+    else
+    {
+        printSelect(game);
+    }
+    ref();
+}
+
+void Lib_arcade_ncurse::endgame()
+{
+    if (game.name == "Select")
+        return;
+    while (getch())
+    {
+        clear();
+        move(30, (LEFTMARGINE/2) + 64);
+        printw("GAME OVER");
+        move(32, (LEFTMARGINE/2) + 64);
+        if (game.score == 1)//Total
+            printw("You Win !");
+        else {
+            printw("Score : ");
+            printw(std::to_string(game.score).data());
         }
     }
 }
 
-void Lib_arcade_ncurse::clear()
-{
-    wclear(wind);
+
+
+//int main (void)
+//{
+//    SelectScreen *fox = new SelectScreen;
+//    int key = 0;
+//    int time = 0;
+//    Lib_arcade_ncurse *lib = new Lib_arcade_ncurse();
+//    lib->assign_game(*fox->game);
+//    lib->refresh(lib->game);
+//    while (1000) {
+//        Event nowkey = lib->Keypressed();
+//        if (nowkey == Event::QUIT)
+//            break;
+//        else
+//            fox->key_event(nowkey);
+//        if (fox->loop(time))
+//            break;
+//        time++;
+//        lib->refresh(*fox->game);
+//    }
+//    lib->endgame();
+//    lib->~Lib_arcade_ncurse();
+//    return 0;
+//}
+
+extern "C" IgraphicLib* create() {
+    return new Lib_arcade_ncurse;
 }
 
-
-int main (void)
-{
-    SolarFox *fox = new SolarFox;
-    int key = 0;
-    int time = 0;
-    Lib_arcade_ncurse *lib = new Lib_arcade_ncurse();
-    lib->assign_game(*fox);
-    keypad(stdscr, TRUE);
-    noecho();
-    lib->refresh(lib->game);
-    nodelay(lib->GetWind(), TRUE);
-    while (1000) {
-        if (lib->key_events(getch(), fox) == 84)
-            break;
-        fox->loop(fox, time);
-        time++;
-        refresh();
-        timeout(50);
-    }
-    endwin();
-    return 0;
+extern "C" void destroy(IgraphicLib* p) {
+    delete p;
 }

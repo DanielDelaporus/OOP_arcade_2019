@@ -10,13 +10,17 @@
 
 class Bullet {
     public:
-        Bullet(int tox, int toy, int px, int py);
+        Bullet(int tox, int toy, int px, int py, int enemy);
         ~Bullet();
         int dirx;
         int diry;
         int posx;
         int posy;
+        int lifespan;
+        int slow = 0;
         int move(int id);
+
+        int FromEnemy;
 
 
     protected:
