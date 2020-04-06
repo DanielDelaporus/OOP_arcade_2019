@@ -76,12 +76,15 @@ void Lib_arcade_sfml::refresh(Games game)
 {
     clear();
     assign_game(game);
+    sf::Font font;
+    sf::Text text;
     sf::RectangleShape box(sf::Vector2f(7, 7));
+    
     if (game.name != "Select") 
     {
         for (int i = 0; i < game.height; i++)    {
             for (int j = 0; j < game.width; j++) {
-                box.setPosition(j * 7, i * 7);
+                box.setPosition(j * 7, 100 + i * 7);
                 //box.setFillColor(sf::Color::Red);
                 printInColor(game.mat[i][j], box);
                 window->draw(box);
@@ -89,6 +92,19 @@ void Lib_arcade_sfml::refresh(Games game)
                 
             }
         }
+        if (font.loadFromFile("lib/SFML/arial.ttf"))
+        {
+            //std::string Game: = "Game: " + game.name;
+            std::string score = "Score: " + std::to_string(game.score);
+            text.setString(score);
+            text.setFont(font);
+            text.setCharacterSize(15);
+            text.setFillColor(sf::Color::Red);
+            text.setPosition(0, 0);
+            text.setStyle(sf::Text::Bold);
+            window->draw(text);
+        }
+        
         window->display();
         //move(45, (LEFTMARGINE/2) + 64);
         //printw("Score : ");
@@ -102,24 +118,36 @@ void Lib_arcade_sfml::refresh(Games game)
 
 void Lib_arcade_sfml::endgame()
 {
-    /*
+    sf::Font font;
+    sf::Text text;
+    sf::Event event;
     if (game.name == "Select")
         return;
-    while (getch())
+    while (1)
     {
-        clear();
-        //move(30, (LEFTMARGINE/2) + 64);
-        printw("GAME OVER");
-        move(32, (LEFTMARGINE/2) + 64);
-        if (game.score == 1)//Total
-            printw("You Win !");
-        else {
-            printw("Score : ");
-            printw(std::to_string(game.score).data());
+        while (window->pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed || event.type == sf::Event::KeyPressed) {
+                window->close();
+                return;
+            }
         }
-        
+        window->clear();
+        if (font.loadFromFile("lib/SFML/arial.ttf"))
+        {
+            //std::string Game: = "Game: " + game.name;
+            std::string score = "Score: " + std::to_string(game.score);
+            text.setString(score);
+            text.setFont(font);
+            text.setCharacterSize(150);
+            text.setFillColor(sf::Color::Red);
+            text.setPosition(50, 50);
+            text.setStyle(sf::Text::Bold);
+            window->draw(text);
+        }
+        window->draw(text);
+        window->display();
     }
-    */
 }
 
 extern "C" IgraphicLib* create() {
