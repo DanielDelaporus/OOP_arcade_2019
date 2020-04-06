@@ -20,7 +20,7 @@ class Enemy {
         }
         void moveasside(Games *game)
         {
-            game->mat[posy][posx] = 0;
+            game->mat[posy][posx] = 7;
             if (dirx == 0) {
                 if (posx != 3 && game->posx < posx)
                     posx -= 1;
@@ -34,7 +34,7 @@ class Enemy {
                 if (posy != 40 - 4 && game->posy > posy)
                     posy += 1; 
             }   
-            game->mat[posy][posx] = 3;
+            game->mat[posy][posx] = 8;
         }
         ~Enemy();
         int posx;

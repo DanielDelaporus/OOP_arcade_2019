@@ -20,7 +20,7 @@ class SolarFox : public Igames
 {
     public:
         SolarFox();//const std::string lib);
-        void AddBullet(Bullet bul);
+        void AddBullet(Bullet bul, int);
         void MakeADiamond(int cx, int cy, Games*);
 
         int loop(int deltatime);
@@ -36,6 +36,8 @@ class SolarFox : public Igames
 
     protected:
         std::list<Bullet> bullets;
+        int to_destroyx;
+        int to_destroyy;
         std::string lib;
 
 

@@ -23,8 +23,9 @@ int Bullet::move(int id)
     {
         if (lifespan == 0)
             return 1;
-
-        if (id == 0 || id == 3)
+        if (id == 4)
+            return 3;
+        if (id == 7 || id == 8)
             return 1;
 
         lifespan--;
@@ -33,9 +34,9 @@ int Bullet::move(int id)
     }
     else
     {
-        if (id == 1)
+        if (id == 2)
             return 2;
-        if (id == 0 || id == 3 || id == 5 || id == 4 || id == 6)
+        if (id == 7 || id == 8 || id == 4 || id == 3 || id == 9)
             return 1;
         if (slow == 10) {
             posx += dirx;

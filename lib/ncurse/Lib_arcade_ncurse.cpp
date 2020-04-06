@@ -24,12 +24,7 @@ void Lib_arcade_ncurse::printInColor(int index) {
         getch();
     }
     start_color();
-
-    if (game.name == "SolarFox")
-        printSolar(index, game);
-    if (game.name == "Pacman")
-        printPac(index, game);
-
+    printlib(index, game);
 }
 
 void ref(){ refresh();}

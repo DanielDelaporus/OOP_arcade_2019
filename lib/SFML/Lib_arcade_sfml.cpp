@@ -15,10 +15,7 @@
 
 void Lib_arcade_sfml::printInColor(int index, sf::RectangleShape &box)
 {
-    if (game.name == "SolarFox")
-        printSolar(index, game, box);
-    if (game.name == "Pacman")
-        printPac(index, game, box);
+    printlib(index, game, box);
 }
 
 Event Lib_arcade_sfml::Keypressed(){

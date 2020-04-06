@@ -9,16 +9,16 @@
 #define PRINT_MAT_HPP_
 
 #include "Lib_arcade_ncurse.hpp"
-
+/*
 void printSolar(int index, Games game)
 {
-    init_pair(1, COLOR_BLACK, COLOR_CYAN);
-    init_pair(2, COLOR_MAGENTA, COLOR_BLACK);
-    init_pair(3, COLOR_BLACK, COLOR_BLACK);
-    init_pair(4, COLOR_BLACK, COLOR_RED);
-    init_pair(5, COLOR_GREEN, COLOR_BLACK);
-    init_pair(6, COLOR_RED, COLOR_BLACK);
-    init_pair(7, COLOR_BLACK, COLOR_BLUE);
+    init_pair(1, COLOR_BLACK, COLOR_CYAN);      //Wall         -> +
+    init_pair(2, COLOR_MAGENTA, COLOR_BLACK);   //Player
+    init_pair(3, COLOR_BLACK, COLOR_BLACK);     //Nothing
+    init_pair(4, COLOR_BLACK, COLOR_RED);       //Enemy
+    init_pair(5, COLOR_GREEN, COLOR_BLACK);     //Playershoot
+    init_pair(6, COLOR_RED, COLOR_BLACK);       //Enemyshoot
+    init_pair(7, COLOR_BLACK, COLOR_BLUE);      // Destructible
     attron(COLOR_PAIR(index + 1));
     switch (index)
     {
@@ -55,19 +55,20 @@ void printSolar(int index, Games game)
             break;
     }
     attroff(COLOR_PAIR(index + 1));
-}
+}*/
 
-void printPac(int index, Games game)
+void printlib(int index, Games game)
 {
-    init_pair(1, COLOR_BLACK, COLOR_BLACK);
-    init_pair(2, COLOR_BLACK, COLOR_BLACK);
-    init_pair(3, COLOR_YELLOW, COLOR_BLACK);
-    init_pair(4, COLOR_YELLOW, COLOR_BLACK);
-    init_pair(5, COLOR_YELLOW, COLOR_BLACK);
-    init_pair(6, COLOR_BLUE, COLOR_BLACK);
-    init_pair(7, COLOR_BLUE, COLOR_BLACK);
-    init_pair(8, COLOR_BLUE, COLOR_BLACK);
-    init_pair(9, COLOR_RED, COLOR_BLACK);
+    init_pair(1, COLOR_BLACK, COLOR_BLACK); // Nothing -> 0
+    init_pair(2, COLOR_BLACK, COLOR_BLACK); // Nothing 2-> 1
+    init_pair(3, COLOR_YELLOW, COLOR_BLACK); //player  1->2 player
+    init_pair(4, COLOR_YELLOW, COLOR_BLACK); // coins 4->3  Playershoot
+    init_pair(5, COLOR_MAGENTA, COLOR_BLACK); // powerup 5->4 Enemyshoot
+    init_pair(6, COLOR_BLUE, COLOR_BLACK);   // Walls horr 
+    init_pair(7, COLOR_BLUE, COLOR_BLACK);   // Walls vert 
+    init_pair(8, COLOR_BLUE, COLOR_BLACK);   // Walls Cross 0->7
+    init_pair(9, COLOR_RED, COLOR_BLACK);    // Enemy 3->8
+    init_pair(10, COLOR_BLUE, COLOR_BLUE); //Destructible walls 6->9
 
     attron(COLOR_PAIR(index + 1));
     switch (index)
@@ -106,7 +107,10 @@ void printPac(int index, Games game)
         case 8:
             printw("A");                     //Walls
             break;
-        
+        case 9:
+            printw(" ");                     //Walls
+            break;
+
         default:
             break;
     }

@@ -9,7 +9,7 @@
 #define PRINT_MAT_HPP_
 
 #include "Lib_arcade_sfml.hpp"
-
+/*
 void printSolar(int index, Games game, sf::RectangleShape &box)
 {
     switch (index)
@@ -39,9 +39,9 @@ void printSolar(int index, Games game, sf::RectangleShape &box)
         default:
             break;
     }
-}
+}*/
 
-void printPac(int index, Games game, sf::RectangleShape &box)
+void printlib(int index, Games game, sf::RectangleShape &box)
 {
     switch (index)
     {
@@ -71,6 +71,9 @@ void printPac(int index, Games game, sf::RectangleShape &box)
             break;
         case 8:
             box.setFillColor(sf::Color::Red);                    //Walls
+            break;
+        case 9:
+            box.setFillColor(sf::Color::Cyan);                    //Walls
             break;
         
         default:
