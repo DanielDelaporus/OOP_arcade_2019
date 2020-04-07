@@ -9,53 +9,6 @@
 #define PRINT_MAT_HPP_
 
 #include "Lib_arcade_ncurse.hpp"
-/*
-void printSolar(int index, Games game)
-{
-    init_pair(1, COLOR_BLACK, COLOR_CYAN);      //Wall         -> +
-    init_pair(2, COLOR_MAGENTA, COLOR_BLACK);   //Player
-    init_pair(3, COLOR_BLACK, COLOR_BLACK);     //Nothing
-    init_pair(4, COLOR_BLACK, COLOR_RED);       //Enemy
-    init_pair(5, COLOR_GREEN, COLOR_BLACK);     //Playershoot
-    init_pair(6, COLOR_RED, COLOR_BLACK);       //Enemyshoot
-    init_pair(7, COLOR_BLACK, COLOR_BLUE);      // Destructible
-    attron(COLOR_PAIR(index + 1));
-    switch (index)
-    {
-        case 0:
-            printw("#");                     //Walls
-            break;
-        case 1:
-            if (game.playerdiry == 1)
-                printw("v");
-            if (game.playerdiry == -1)
-                printw("^");
-            if (game.playerdirx == 1)
-                printw(">");
-            if (game.playerdirx == -1)
-                printw("<");                     //Walls
-            break;
-        case 2:
-            printw(" ");                     //Walls
-            break;
-        case 3:
-            printw("@");                     //Walls
-            break;
-        case 4:
-            printw("*");                     //Walls
-            break;
-        case 5:
-            printw("*");                     //Walls
-            break;
-        case 6:
-            printw(" ");                     //Walls
-            break;
-        
-        default:
-            break;
-    }
-    attroff(COLOR_PAIR(index + 1));
-}*/
 
 void printlib(int index, Games game)
 {
@@ -126,7 +79,12 @@ void printSelect(Games game)
     start_color();
     init_pair(1, COLOR_WHITE, COLOR_BLACK);
     init_pair(2, COLOR_BLACK, COLOR_WHITE);
+    init_pair(3, COLOR_BLACK, COLOR_RED);
 
+    move(20, 62);
+    attron(COLOR_PAIR(3));
+    printw("---ARCADE---");
+    attroff(COLOR_PAIR(3));
 
     move(25, 50);
     attron(COLOR_PAIR((game.posx == 0) + 1));
@@ -135,9 +93,14 @@ void printSelect(Games game)
 
 
     move(27, 50);
-    attron(COLOR_PAIR((game.posx != 0) + 1));
+    attron(COLOR_PAIR((game.posx == 1) + 1));
     printw("--- Pacman ---");
-    attroff(COLOR_PAIR((game.posx != 0) + 1));
+    attroff(COLOR_PAIR((game.posx == 1) + 1));
+
+    move(29, 50);
+    attron(COLOR_PAIR((game.posx == 2) + 1));
+    printw("--- Nibbler ---");
+    attroff(COLOR_PAIR((game.posx == 2) + 1));
 
     move(25, 75);
     attron(COLOR_PAIR((game.posy == 0) + 1));
@@ -145,11 +108,14 @@ void printSelect(Games game)
     attroff(COLOR_PAIR((game.posy == 0) + 1));
 
     move(27, 75);
-    attron(COLOR_PAIR((game.posy != 0) + 1));
+    attron(COLOR_PAIR((game.posy == 1) + 1));
     printw("---SFML---");
-    attroff(COLOR_PAIR((game.posy != 0) + 1));
+    attroff(COLOR_PAIR((game.posy == 1) + 1));
 
-
+    move(29, 75);
+    attron(COLOR_PAIR((game.posy == 2) + 1));
+    printw("---GTK---");
+    attroff(COLOR_PAIR((game.posy == 2) + 1));
 }
 
 #endif /* !LIB_ARCADE_NCURSE_HPP_ */

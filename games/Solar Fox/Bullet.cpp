@@ -23,8 +23,6 @@ int Bullet::move(int id)
     {
         if (lifespan == 0)
             return 1;
-        if (id == 4)
-            return 3;
         if (id == 7 || id == 8)
             return 1;
 

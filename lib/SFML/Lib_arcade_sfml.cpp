@@ -82,16 +82,12 @@ void Lib_arcade_sfml::refresh(Games game)
         for (int i = 0; i < game.height; i++)    {
             for (int j = 0; j < game.width; j++) {
                 box.setPosition(j * 7, 100 + i * 7);
-                //box.setFillColor(sf::Color::Red);
                 printInColor(game.mat[i][j], box);
                 window->draw(box);
-                //move(5+i, LEFTMARGINE+j);
-                
             }
         }
         if (font.loadFromFile("lib/SFML/arial.ttf"))
         {
-            //std::string Game: = "Game: " + game.name;
             std::string score = "Score: " + std::to_string(game.score);
             text.setString(score);
             text.setFont(font);
@@ -99,18 +95,11 @@ void Lib_arcade_sfml::refresh(Games game)
             text.setFillColor(sf::Color::Red);
             text.setPosition(0, 0);
             text.setStyle(sf::Text::Bold);
-            window->draw(text);
         }
-        
-        window->display();
-        //move(45, (LEFTMARGINE/2) + 64);
-        //printw("Score : ");
-        //printw(std::to_string(game.score).data());
     }
     else
-    {
-        //printSelect(game);
-    }
+        printSelect(game, window);
+    window->display();
 }
 
 void Lib_arcade_sfml::endgame()
