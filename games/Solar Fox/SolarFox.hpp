@@ -26,6 +26,7 @@ class SolarFox : public Igames
         int loop(int deltatime);
         virtual void key_event(int) override;//, SolarFox*);
         ~SolarFox();
+        int is_around(int, int, int);
 
         virtual Games GetGame() override {return *game;};
         Enemy *upEnemy;
@@ -36,8 +37,6 @@ class SolarFox : public Igames
 
     protected:
         std::list<Bullet> bullets;
-        int to_destroyx;
-        int to_destroyy;
         std::string lib;
 
 

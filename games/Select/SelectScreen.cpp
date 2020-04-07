@@ -22,7 +22,7 @@ void SelectScreen::key_event(int key)
     if (game->playerdirx == 0) {
         if (key == Event::UP && game->posx != 0)
             game->posx -= 1;
-        if (key == Event::DOWN && game->posx != 1)
+        if (key == Event::DOWN && game->posx != 2)
             game->posx += 1;
         if (key == Event::LEFT && game->playerdirx != 0)
             game->playerdirx -= 1;
@@ -33,7 +33,7 @@ void SelectScreen::key_event(int key)
     {
         if (key == Event::UP && game->posy != 0)
             game->posy -= 1;
-        if (key == Event::DOWN && game->posy != 1)
+        if (key == Event::DOWN && game->posy != 2)
             game->posy += 1;
         if (key == Event::LEFT && game->playerdirx != 0)
             game->playerdirx -= 1;

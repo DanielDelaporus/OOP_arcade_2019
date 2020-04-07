@@ -15,24 +15,6 @@
 
 #include <filesystem>
 
-/*
-std::vector<std::string> &game_list()
-{
-    
-}
-
-std::vector<std::string> &graph_lib_list()
-{
-
-}
-
-
-int launch_menu(std::string lib_core)
-{
-    return 0;
-}
-*/
-
 int main(int argc, char **argv)
 {
     std::string lib_core;
@@ -47,10 +29,21 @@ int main(int argc, char **argv)
     destroyg_t *destroy_game = lib_gdestructor("./games/lib_arcade_SelectScreen.so");
     Igames *fox = create_game();
 
-    create_t *create_graph = lib_constructor("./lib/lib_arcade_ncurse.so");
-    destroy_t *destroy_graph = lib_destructor("./lib/lib_arcade_ncurse.so");
+    create_t *create_graph;
+    destroy_t *destroy_graph;
+
+    create_graph = lib_constructor(lib_core);
+    destroy_graph = lib_destructor(lib_core);
     IgraphicLib *lib = create_graph();
-    
+
+    int which_lib;
+
+    if (lib_core == "./lib/lib_arcade_ncurse.so")
+        which_lib = 0;
+    else if ("./lib/lib_arcade_sfml.so")
+        which_lib = 1;
+    else
+        which_lib = 2;
     
     int time = 0;
 
@@ -60,6 +53,21 @@ int main(int argc, char **argv)
         Event nowkey = lib->Keypressed();
         if (nowkey == Event::QUIT)
             break;
+        //else if (nowkey == Event::NEXT_GRAPH){
+        //    destroy_graph(lib);
+        //    if (which_lib == 2) {
+        //        create_graph = lib_constructor("./lib/lib_arcade_ncurse.so");
+        //        which_lib = 0;
+        //    }
+        //    else if (which_lib == 1){
+        //        //create_graph = lib_constructor("./lib/lib_arcade_gtk.so");
+        //        which_lib = 2;
+        //    }
+        //    else {
+        //        create_graph = lib_constructor("./lib/lib_arcade_sfml.so");
+        //        which_lib = 1;
+        //    }
+        //}
         else
             fox->key_event(nowkey);
         if (fox->loop(time))
@@ -69,7 +77,7 @@ int main(int argc, char **argv)
     }
     lib->endgame();
     int which_game = fox->GetGame().posx;
-    int which_lib = fox->GetGame().posy;
+    which_lib = fox->GetGame().posy;
     destroy_graph(lib);
     destroy_game(fox);
 
@@ -77,13 +85,17 @@ int main(int argc, char **argv)
     //Things were chosen
     if (which_game == 0)
         create_game = lib_gconstructor("./games/lib_arcade_solarfox.so");
-    else
+    else if (which_game == 1)
         create_game = lib_gconstructor("./games/lib_arcade_pacman.so");
+    else
+        create_game = lib_gconstructor("./lib/lib_arcade_nibbler.so");
 
     if (which_lib == 0)
         create_graph = lib_constructor("./lib/lib_arcade_ncurse.so");
-    else
+    else if (which_lib == 1)
         create_graph = lib_constructor("./lib/lib_arcade_sfml.so");
+    else
+        create_graph = lib_constructor("./lib/lib_arcade_gtk.so");
 
     fox = create_game();
     lib = create_graph();
@@ -97,14 +109,19 @@ int main(int argc, char **argv)
             break;
         else if (nowkey == Event::NEXT_GRAPH){
             destroy_graph(lib);
-            if (which_lib) {
+            if (which_lib == 2) {
                 create_graph = lib_constructor("./lib/lib_arcade_ncurse.so");
                 which_lib = 0;
+            }
+            else if (which_lib == 1){
+                //create_graph = lib_constructor("./lib/lib_arcade_gtk.so");
+                which_lib = 2;
             }
             else {
                 create_graph = lib_constructor("./lib/lib_arcade_sfml.so");
                 which_lib = 1;
             }
+            
             lib = create_graph();
             lib->assign_game(fox->GetGame());
             lib->refresh(fox->GetGame());
@@ -112,13 +129,17 @@ int main(int argc, char **argv)
         }
          else if (nowkey == Event::NEXT_GAME){
             destroy_game(fox);
-            if (which_game == 0) {
-                create_game = lib_gconstructor("./games/lib_arcade_pacman.so");
-                which_game = 1;
-            }
-            else {
+            if (which_game == 2) {
                 create_game = lib_gconstructor("./games/lib_arcade_solarfox.so");
                 which_game = 0;
+            }
+            else if (which_lib == 1){
+                //create_game = lib_gconstructor("./games/lib_arcade_nibbler.so");
+                which_game = 2;
+            }
+            else {
+                create_game = lib_gconstructor("./games/lib_arcade_pacman.so");
+                which_game = 1;
             }
             fox = create_game();
             time = 0;
@@ -127,6 +148,7 @@ int main(int argc, char **argv)
         }
         else
             fox->key_event(nowkey);
+        lib->refresh(fox->GetGame());
         if (fox->loop(time))
             break;
         time++;

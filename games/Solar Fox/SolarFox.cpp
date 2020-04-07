@@ -38,8 +38,6 @@ SolarFox::SolarFox()
     game->posy = HEIGHT / 2;
     game->width = 100;
     game->height = 40;
-    to_destroyy = 0;
-    to_destroyx = 0;
     game->playerdirx = 0;
     game->playerdiry = -1;
     for (int i = 0; i < game->width; i++)
@@ -87,25 +85,29 @@ void SolarFox::AddBullet(Bullet bul, int Ally)
         bullets.push_back(bul);
 }
 
+int SolarFox::is_around(int ind, int posx, int posy)
+{
+    if (game->mat[posy][posx] == ind || game->mat[posy][posx+1] == ind || game->mat[posy][posx-1] == ind)
+        return 1;
+    if (game->mat[posy+1][posx] == ind || game->mat[posy-1][posx] == ind)
+        return 1;
+    return 0;
+}
+
 int SolarFox::loop(int deltatime)
 {
     std::list<Bullet>::iterator tmp = bullets.begin();
     for (; tmp != bullets.end(); tmp++) {
-        game->mat[tmp->posy][tmp->posx] = 1;
-        if (tmp->posx == to_destroyx && tmp->posy == to_destroyy) {
+        if (tmp->FromEnemy && game->mat[tmp->posy][tmp->posx] != 4){
+            game->mat[tmp->posy][tmp->posx] = 1;
             tmp->~Bullet();
-            to_destroyy = 0;
-            to_destroyx = 0;
         }
         else{
+            game->mat[tmp->posy][tmp->posx] = 1;
             int ret = tmp->move(game->mat[tmp->posy + tmp->diry][tmp->posx +tmp->dirx]);
             if (ret != 0){
                 if (ret == 2)
                     return 1;
-                if (ret == 3) {
-                    to_destroyx = tmp->posx + tmp->dirx;
-                    to_destroyy = tmp->posy + tmp->diry;
-                }
                 else
                     tmp->~Bullet();
             }
