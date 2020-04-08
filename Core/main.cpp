@@ -53,21 +53,21 @@ int main(int argc, char **argv)
         Event nowkey = lib->Keypressed();
         if (nowkey == Event::QUIT)
             break;
-        //else if (nowkey == Event::NEXT_GRAPH){
-        //    destroy_graph(lib);
-        //    if (which_lib == 2) {
-        //        create_graph = lib_constructor("./lib/lib_arcade_ncurse.so");
-        //        which_lib = 0;
-        //    }
-        //    else if (which_lib == 1){
-        //        //create_graph = lib_constructor("./lib/lib_arcade_gtk.so");
-        //        which_lib = 2;
-        //    }
-        //    else {
-        //        create_graph = lib_constructor("./lib/lib_arcade_sfml.so");
-        //        which_lib = 1;
-        //    }
-        //}
+        else if (nowkey == Event::NEXT_GRAPH || nowkey == Event::PREV_GRAPH){
+            destroy_graph(lib);
+            if (which_lib == 2 && nowkey == Event::NEXT_GRAPH || which_lib == 1 && nowkey == Event::PREV_GRAPH) {
+                create_graph = lib_constructor("./lib/lib_arcade_ncurse.so");
+                which_lib = 0;
+            }
+            else if (which_lib == 1 && nowkey == Event::NEXT_GRAPH || which_lib == 0 && nowkey == Event::PREV_GRAPH){
+                //create_graph = lib_constructor("./lib/lib_arcade_gtk.so");
+                which_lib = 2;
+            }
+            else {
+                create_graph = lib_constructor("./lib/lib_arcade_sfml.so");
+                which_lib = 1;
+            }
+        }
         else
             fox->key_event(nowkey);
         if (fox->loop(time))
@@ -107,13 +107,13 @@ int main(int argc, char **argv)
         Event nowkey = lib->Keypressed();
         if (nowkey == Event::QUIT)
             break;
-        else if (nowkey == Event::NEXT_GRAPH){
+        else  if (nowkey == Event::NEXT_GRAPH || nowkey == Event::PREV_GRAPH){
             destroy_graph(lib);
-            if (which_lib == 2) {
+            if (which_lib == 2 && nowkey == Event::NEXT_GRAPH || which_lib == 1 && nowkey == Event::PREV_GRAPH) {
                 create_graph = lib_constructor("./lib/lib_arcade_ncurse.so");
                 which_lib = 0;
             }
-            else if (which_lib == 1){
+            else if (which_lib == 1 && nowkey == Event::NEXT_GRAPH || which_lib == 0 && nowkey == Event::PREV_GRAPH){
                 //create_graph = lib_constructor("./lib/lib_arcade_gtk.so");
                 which_lib = 2;
             }
@@ -121,20 +121,19 @@ int main(int argc, char **argv)
                 create_graph = lib_constructor("./lib/lib_arcade_sfml.so");
                 which_lib = 1;
             }
-            
             lib = create_graph();
             lib->assign_game(fox->GetGame());
             lib->refresh(fox->GetGame());
 
         }
-         else if (nowkey == Event::NEXT_GAME){
+        else if (nowkey == Event::NEXT_GAME || nowkey == Event::PREV_GAME){
             destroy_game(fox);
-            if (which_game == 2) {
+            if (which_game == 2 && nowkey == Event::NEXT_GAME || which_game == 1 && nowkey == Event::PREV_GAME) {
                 create_game = lib_gconstructor("./games/lib_arcade_solarfox.so");
                 which_game = 0;
             }
-            else if (which_lib == 1){
-                //create_game = lib_gconstructor("./games/lib_arcade_nibbler.so");
+            else if (which_game == 2 && nowkey == Event::NEXT_GAME || which_game == 1 && nowkey == Event::PREV_GAME){
+                create_game = lib_gconstructor("./games/lib_arcade_nibbler.so");
                 which_game = 2;
             }
             else {

@@ -39,6 +39,10 @@ Event Lib_arcade_ncurse::Keypressed(){
         return Event::NEXT_GAME;
     if (key == 'p')
         return Event::NEXT_GRAPH;
+    if (key == 'l')
+        return Event::PREV_GAME;
+    if (key == 'm')
+        return Event::PREV_GRAPH;
     if (key == KEY_DOWN)
         return Event::DOWN;
     if (key == KEY_LEFT)

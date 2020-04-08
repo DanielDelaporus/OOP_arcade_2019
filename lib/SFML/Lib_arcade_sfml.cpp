@@ -41,6 +41,10 @@ Event Lib_arcade_sfml::Keypressed(){
                 return Event::NEXT_GAME;
             if (event.key.code == sf::Keyboard::P)
                 return Event::NEXT_GRAPH;
+            if (event.key.code == sf::Keyboard::L)
+                return Event::PREV_GAME;
+            if (event.key.code == sf::Keyboard::M)
+                return Event::PREV_GRAPH;
             if (event.key.code == sf::Keyboard::Escape || !window->isOpen())
                 return Event::QUIT;
         }
