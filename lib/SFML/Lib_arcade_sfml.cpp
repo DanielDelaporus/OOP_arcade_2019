@@ -137,24 +137,25 @@ void Lib_arcade_sfml::endgame(std::string name)
             text.setStyle(sf::Text::Bold);
             window->draw(text);
 
-            text.setPosition(50, 150);
-            std::fstream ifs("./playerprofile/" + name, std::fstream::out | std::fstream::in);
-            std::string thescore;
-            int line = 0;
-            int currentline = 0;
-            if (game.name == "Pacman")
-                line = 1;
-            if (game.name == "Nibbler")
-                line = 2;
-            while (line != currentline)
+            if (game.name != "Pacman") {
+                text.setPosition(50, 150);
+                std::fstream ifs("./playerprofile/" + name, std::fstream::out | std::fstream::in);
+                std::string thescore;
+                int line = 0;
+                int currentline = 0;
+                if (game.name == "Pacman")
+                    line = 1;
+                if (game.name == "Nibbler")
+                    line = 2;
+                while (line != currentline)
+                    getline(ifs, thescore);
                 getline(ifs, thescore);
-            getline(ifs, thescore);
-            if (thescore == "" )
-                thescore = "0";
-            text.setString(("Highscore : " + thescore).data());
-            ifs.close();
-            window->draw(text);
-
+                if (thescore == "" )
+                    thescore = "0";
+                text.setString(("Highscore : " + thescore).data());
+                ifs.close();
+                window->draw(text);
+            }
         }
         window->draw(text);
         window->display();
