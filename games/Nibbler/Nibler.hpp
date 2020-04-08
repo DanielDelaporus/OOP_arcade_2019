@@ -11,6 +11,7 @@
 #include<string>
 #include<list>
 #include <algorithm>
+#include <ctime>
 #include "Bullet.hpp"
 #include "Enemy.hpp"
 #include "../Igames.hpp"
@@ -27,19 +28,18 @@ class Nibler : public Igames
         virtual Games GetGame() override {return *game;};
 
     protected:
+        void random_fruit();
         Games *game;
-        int fx;
-        int fy;
         typedef struct snake {
             int x;
             int y;
-        } snake;
-        snake s[100];
+        } snake_t;
+        snake_t s[100];
         typedef struct fruit {
             int x;
             int y;
-        } fruit;
-        fruit f;
+        } fruit_t;
+        fruit_t f;
         int dir;
         int snake_size;
     private:

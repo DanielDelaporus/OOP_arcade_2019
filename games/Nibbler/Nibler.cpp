@@ -12,6 +12,18 @@
 #define WIDTH 100
 #define HEIGHT 40
 
+void Nibler::random_fruit()
+{
+    std::srand(std::time(nullptr));
+    int random_variable = std::rand();
+    f.x = 1 + std::rand()%20;
+    f.y = 1 + std::rand()%20;
+    for (int i = 0; i < this->snake_size; i++) {
+        if (f.x == s[0].x && f.y == s[0].y)
+            random_fruit();
+    }
+}
+
 Nibler::Nibler()
 {
     game = new Games;
@@ -28,7 +40,7 @@ Nibler::Nibler()
             game->mat[j][i] = 0;
     snake_size = 3;
     dir = 0;
-    f.x = 
+    random_fruit();
 }
 
 Nibler::~Nibler()
@@ -39,11 +51,6 @@ Nibler::~Nibler()
 int Nibler::loop(int deltatime)
 {
     if (deltatime % 80 ==0) {
-        for (int i = 1; i < snake_size; i++)
-        {
-            s[i].x = s[i-1].x;
-            s[i].y = s[i-1].y;
-        }
         if (dir == 3)
             s[0].x += 1;
         if (dir == 2)
@@ -52,9 +59,25 @@ int Nibler::loop(int deltatime)
             s[0].y -= 1;
         if (dir == 0)
             s[0].y += 1;
-        for (int i = 0; i < snake_size; i++) {
-            game->mat[s[i].x][s[i].y] = 7;
+        for (int i = 1; i < snake_size + 1; i++)
+        {
+            s[i].x = s[i-1].x;
+            s[i].y = s[i-1].y;
+            if (i != snake_size)
+                game->mat[s[i].x][s[i].y] = 7;
         }
+        for(int i = 1; i < snake_size; i++)
+        {
+            if (s[0].x == s[i].x && s[0].y == s[i].y)
+                return 1;
+        }
+        if (s[0].x == f.x && s[0].y == f.y) {
+            random_fruit();
+            game->score += 1;
+            snake_size += 1;
+        }
+        if (s[0].x == 0 || s[0].x == 19 || s[0].y == 0 || s[0].y == 19)
+            return 1;
         return 0;
     }
 }
