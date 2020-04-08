@@ -139,6 +139,19 @@ int_x4 Pacman::get_allowed_moves(int x, int y)
     return allowed_moves;
 }
 
+int Pacman::get_collision(int x, int y)
+{
+    if (game->mat[y][x + 1] == 8)
+        return 1;
+    if (game->mat[y + 1][x] == 8)
+        return 1;
+    if (game->mat[y][x - 1] == 8)
+        return 1;
+    if (game->mat[y - 1][x] == 8)
+        return 1;
+    return 0;
+}
+
 #define KEY_DOWN	0402
 #define KEY_UP		0403
 #define KEY_LEFT	0404
@@ -180,6 +193,8 @@ void Pacman::update_ghost()
 
 int Pacman::loop(int deltatime)
 {
+    if (get_collision(game->posx, game->posy))
+        return 1;
     if (deltatime % 2 == 0 || deltatime % 3 == 0)
         return 0;
     if (Blinky->get_last_path() == 2)
