@@ -35,6 +35,11 @@ class Nibler : public Igames
             int y;
         } snake;
         snake s[100];
+        typedef struct fruit {
+            int x;
+            int y;
+        } fruit;
+        fruit f;
         int dir;
         int snake_size;
     private:

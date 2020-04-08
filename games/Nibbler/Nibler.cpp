@@ -28,6 +28,7 @@ Nibler::Nibler()
             game->mat[j][i] = 0;
     snake_size = 3;
     dir = 0;
+    f.x = 
 }
 
 Nibler::~Nibler()
@@ -51,7 +52,9 @@ int Nibler::loop(int deltatime)
             s[0].y -= 1;
         if (dir == 0)
             s[0].y += 1;
-        
+        for (int i = 0; i < snake_size; i++) {
+            game->mat[s[i].x][s[i].y] = 7;
+        }
         return 0;
     }
 }
