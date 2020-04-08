@@ -14,6 +14,7 @@ core:
 games:
 			make -C games/Solar\ Fox/
 			make -C games/Pacman/
+			make -C games/Nibbler/
 
 graphicals:
 			make -C lib/ncurse/
@@ -26,6 +27,7 @@ clean:
 			make clean -C Core/
 			make clean -C games/Select/
 			make clean -C lib/SFML/
+			make clean -C games/Nibbler/
 
 fclean:		clean
 			make fclean -C lib/ncurse
@@ -34,6 +36,7 @@ fclean:		clean
 			make fclean -C Core/
 			make fclean -C games/Select/
 			make fclean -C lib/SFML/
+			make fclean -C games/Nibbler/
 
 re:			fclean all
 
