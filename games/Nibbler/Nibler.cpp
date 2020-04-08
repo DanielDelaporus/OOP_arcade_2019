@@ -6,7 +6,6 @@
 */
 
 #include "Nibler.hpp"
-#include "Enemy.hpp"
 #include "../Games.hpp"
 
 #define WIDTH 100
