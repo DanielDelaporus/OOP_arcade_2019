@@ -42,6 +42,8 @@ void Lib_arcade_caca::init(int x, int y)
 {
     canvas = caca_create_canvas(x, y);
     display = caca_create_display(canvas);
+
+    caca_set_display_time(display, 50000);
     if (!display)
         std::cout << "Cacalib : error creating display" << std::endl;
     caca_set_color_ansi(canvas, CACA_BLACK, CACA_WHITE);
@@ -50,7 +52,7 @@ void Lib_arcade_caca::init(int x, int y)
 
 Lib_arcade_caca::Lib_arcade_caca()
 {
-    init(50, 50);
+    init(150, 150);
 }
 
 Lib_arcade_caca::~Lib_arcade_caca()
@@ -60,7 +62,7 @@ Lib_arcade_caca::~Lib_arcade_caca()
 
 void Lib_arcade_caca::clear()
 {
-
+    caca_clear_canvas(canvas);
 }
 
 void Lib_arcade_caca::destroy()
@@ -71,48 +73,27 @@ void Lib_arcade_caca::destroy()
 void Lib_arcade_caca::refresh(Games game)
 {
     assign_game(game);
-    if (game.name != "Select")
-    {
-        for (int i = 0; i < game.height; i++)
-            for (int j = 0; j < game.width; j++)
-                printlib(game.mat[i][j], i, j, canvas);
-    }
+
+    if (game.name == "Select")
+        return;
+    for (int i = 0; i < game.height; i++)
+        for (int j = 0; j < game.width; j++)
+            printlib(game.mat[j][i], i, j, canvas);
+    caca_refresh_display(display);
 }
 
 void Lib_arcade_caca::endgame()
 {
-    /*
-    sf::Font font;
-    sf::Text text;
-    sf::Event event;
     if (game.name == "Select")
         return;
-    while (1)
-    {
-        while (window->pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed || event.type == sf::Event::KeyPressed) {
-                window->close();
-                return;
-            }
-        }
-        window->clear();
-        if (font.loadFromFile("lib/SFML/arial.ttf"))
-        {
-            //std::string Game: = "Game: " + game.name;
-            std::string score = "Score: " + std::to_string(game.score);
-            text.setString(score);
-            text.setFont(font);
-            text.setCharacterSize(150);
-            text.setFillColor(sf::Color::Red);
-            text.setPosition(50, 50);
-            text.setStyle(sf::Text::Bold);
-            window->draw(text);
-        }
-        window->draw(text);
-        window->display();
-    }
-    */
+    std::string score = "Score: " + std::to_string(game.score);
+
+    clear();
+
+    caca_set_color_ansi(canvas, CACA_BLACK, CACA_WHITE);
+    caca_put_str(canvas, 0, 0, score.c_str());
+
+    caca_refresh_display(display);
 }
 
 extern "C" IgraphicLib* create() {
