@@ -114,7 +114,7 @@ int main(int argc, char **argv)
                 which_lib = 0;
             }
             else if ((which_lib == 1 && nowkey == Event::NEXT_GRAPH) || (which_lib == 0 && nowkey == Event::PREV_GRAPH)){
-                //create_graph = lib_constructor("./lib/lib_arcade_gtk.so");
+                //create_graph = lib_constructor("./lib/lib_arcade_caca.so");
                 which_lib = 2;
             }
             else {
