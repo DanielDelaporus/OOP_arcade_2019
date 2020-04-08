@@ -63,7 +63,7 @@ int Nibler::loop(int deltatime)
             s[i].x = s[i-1].x;
             s[i].y = s[i-1].y;
             if (i != snake_size)
-                game->mat[s[i].x][s[i].y] = 7;
+                game->mat[s[i].y][s[i].x] = 7;
         }
         for(int i = 1; i < snake_size; i++)
         {
@@ -83,19 +83,19 @@ int Nibler::loop(int deltatime)
 
 void Nibler::key_event(int key)    // NEVER COLLIDES WITH 0 LAYER (WHICH IS WALLS)
 {
-    if (key == Event::UP && game->mat[game->posy - 1][game->posx] != 7 && game->playerdiry != 1) {
+    if (key == Event::UP) {
         if (dir != 0)
             dir = 1;
     }
-    if (key == Event::DOWN && game->mat[game->posy + 1][game->posx] != 7 && game->playerdiry != -1) {
+    if (key == Event::DOWN) {
         if (dir != 1)
             dir = 0;
     }
-    if (key == Event::LEFT && game->mat[game->posy][game->posx - 1] != 7 && game->playerdirx != 1) {
+    if (key == Event::LEFT) {
         if (dir != 3)
             dir = 2;
     }
-    if (key == Event::RIGHT && game->mat[game->posy][game->posx + 1] != 7 && game->playerdirx != -1) {
+    if (key == Event::RIGHT) {
         if (dir != 2)
             dir = 3;
     }
