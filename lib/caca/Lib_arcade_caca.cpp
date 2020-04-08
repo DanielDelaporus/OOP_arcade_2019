@@ -71,12 +71,12 @@ void Lib_arcade_caca::destroy()
 void Lib_arcade_caca::refresh(Games game)
 {
     assign_game(game);
-    if (game.name != "Select")
-    {
-        for (int i = 0; i < game.height; i++)
-            for (int j = 0; j < game.width; j++)
-                printlib(game.mat[i][j], i, j, canvas);
-    }
+    if (game.name == "Select")
+        return;
+    for (int i = 0; i < game.height; i++)
+        for (int j = 0; j < game.width; j++)
+            printlib(game.mat[i][j], i, j, canvas);
+    caca_refresh_display(display);
 }
 
 void Lib_arcade_caca::endgame()

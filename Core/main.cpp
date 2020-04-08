@@ -60,7 +60,7 @@ int main(int argc, char **argv)
                 which_lib = 0;
             }
             else if ((which_lib == 1 && nowkey == Event::NEXT_GRAPH) || (which_lib == 0 && nowkey == Event::PREV_GRAPH)){
-                //create_graph = lib_constructor("./lib/lib_arcade_caca.so");
+                create_graph = lib_constructor("./lib/lib_arcade_caca.so");
                 which_lib = 2;
             }
             else {
@@ -95,7 +95,7 @@ int main(int argc, char **argv)
     else if (which_lib == 1)
         create_graph = lib_constructor("./lib/lib_arcade_sfml.so");
     else
-        create_graph = lib_constructor("./lib/lib_arcade_gtk.so");
+        create_graph = lib_constructor("./lib/lib_arcade_caca.so");
 
     fox = create_game();
     lib = create_graph();
@@ -114,7 +114,7 @@ int main(int argc, char **argv)
                 which_lib = 0;
             }
             else if ((which_lib == 1 && nowkey == Event::NEXT_GRAPH) || (which_lib == 0 && nowkey == Event::PREV_GRAPH)){
-                //create_graph = lib_constructor("./lib/lib_arcade_caca.so");
+                create_graph = lib_constructor("./lib/lib_arcade_caca.so");
                 which_lib = 2;
             }
             else {
