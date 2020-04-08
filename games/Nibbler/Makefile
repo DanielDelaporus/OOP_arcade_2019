@@ -5,7 +5,7 @@
 ## Makefile to build project
 ##
 
-SRC	=			nibbler.cpp
+SRC	=			Nibler.cpp
 
 NAME	=	lib_arcade_nibbler.so
 
