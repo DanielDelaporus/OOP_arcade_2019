@@ -55,10 +55,13 @@ void newscore(Games fox, std::string name)
 {
     std::fstream ofs("./playerprofile/" + name, std::fstream::out | std::fstream::in);
     int score = fox.score;
+    std::string str;
     int currentline = 0;
     if (fox.name == "SolarFox") {
         while ( currentline != 2) {
-            if (currentline == 0) {
+            std::getline(ofs, str);
+            ofs.seekg(ofs.tellg() - (str.size() + 1));
+            if (currentline == 0 && std::stoi(str) < score) {
                 ofs << score << std::endl;
             }
             else {
@@ -69,7 +72,9 @@ void newscore(Games fox, std::string name)
     }
     if (fox.name == "Pacman") {
         while ( currentline != 2) {
-            if (currentline == 1) {
+            std::getline(ofs, str);
+            ofs.seekg(ofs.tellg() - (str.size() + 1));
+            if (currentline == 1 && std::stoi(str) < score) {
                 ofs << score << std::endl;
             }
             else {
@@ -80,7 +85,9 @@ void newscore(Games fox, std::string name)
     }
     if (fox.name == "Nibbler") {
         while ( currentline != 3) {
-            if (currentline == 2) {
+            std::getline(ofs, str);
+            ofs.seekg(ofs.tellg() - (str.size() + 1));
+            if (currentline == 2 && std::stoi(str) < score) {
                 ofs << score << std::endl;
             }
             else {
