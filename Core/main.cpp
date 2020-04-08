@@ -99,7 +99,7 @@ int main(int argc, char **argv)
     else if (which_game == 1)
         create_game = lib_gconstructor("./games/lib_arcade_pacman.so");
     else
-        create_game = lib_gconstructor("./lib/lib_arcade_nibbler.so");
+        create_game = lib_gconstructor("./games/lib_arcade_nibbler.so");
 
     if (which_lib == 0)
         create_graph = lib_constructor("./lib/lib_arcade_ncurse.so");

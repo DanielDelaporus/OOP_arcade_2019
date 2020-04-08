@@ -15,8 +15,8 @@ void Nibler::random_fruit()
 {
     std::srand(std::time(nullptr));
     int random_variable = std::rand();
-    f.x = 1 + std::rand()%20;
-    f.y = 1 + std::rand()%20;
+    f.x = 2 + std::rand()%18;
+    f.y = 2 + std::rand()%18;
     for (int i = 0; i < this->snake_size; i++) {
         if (f.x == s[0].x && f.y == s[0].y)
             random_fruit();
@@ -35,11 +35,21 @@ Nibler::Nibler()
     game->playerdirx = 0;
     game->playerdiry = -1;
     for (int i = 0; i < game->width; i++)
-        for (int j = 0; j < game->height; j++)
-            game->mat[j][i] = 0;
+        for (int j = 0; j < game->height; j++) {
+            if (i != 0 || j != 0)
+                game->mat[j][i] = 1;
+            else
+                game->mat[j][i] = 5;
+        }
+            
+    for (int i = 0; i < 400; i++) {
+        s[i].x = 9;
+        s[i].y = 9;
+    }
     snake_size = 3;
     dir = 0;
     random_fruit();
+    game->mat[f.y][f.x] = 3;
 }
 
 Nibler::~Nibler()
@@ -47,9 +57,27 @@ Nibler::~Nibler()
     delete game;
 }
 
+#include <iostream>
+
 int Nibler::loop(int deltatime)
 {
-    if (deltatime % 80 ==0) {
+    if (deltatime % 4 ==0) {
+        for (int i = 0; i < game->width; i++)
+        {
+            for (int j = 0; j < game->height; j++) {
+                if (i != 0 && j != 0 && i != 19 && j != 19)
+                    game->mat[j][i] = 1;
+                else
+                    game->mat[j][i] = 8;
+            }
+        }
+        for (int i = 1; i < snake_size; i++)
+        {
+            s[i].x = s[i-1].x;
+            s[i].y = s[i-1].y;
+            if (i != snake_size && i != 0)
+                game->mat[s[i].y][s[i].x] = 7;
+        }
         if (dir == 3)
             s[0].x += 1;
         if (dir == 2)
@@ -58,27 +86,27 @@ int Nibler::loop(int deltatime)
             s[0].y -= 1;
         if (dir == 0)
             s[0].y += 1;
-        for (int i = 1; i < snake_size + 1; i++)
-        {
-            s[i].x = s[i-1].x;
-            s[i].y = s[i-1].y;
-            if (i != snake_size)
-                game->mat[s[i].y][s[i].x] = 7;
-        }
+        game->mat[s[0].y][s[0].x] = 7;
         for(int i = 1; i < snake_size; i++)
         {
-            if (s[0].x == s[i].x && s[0].y == s[i].y)
+            if (s[0].x == s[i].x && s[0].y == s[i].y) {
+                std::cout << "test2" << std::endl;
                 return 1;
+            }
+                
         }
         if (s[0].x == f.x && s[0].y == f.y) {
             random_fruit();
+            game->mat[f.y][f.x] = 3;
             game->score += 1;
             snake_size += 1;
         }
-        if (s[0].x == 0 || s[0].x == 19 || s[0].y == 0 || s[0].y == 19)
+        if (s[0].x == 0 || s[0].x == 19 || s[0].y == 0 || s[0].y == 19) {
+            std::cout << "test" << std::endl;
             return 1;
-        return 0;
+        }
     }
+    return 0;
 }
 
 void Nibler::key_event(int key)    // NEVER COLLIDES WITH 0 LAYER (WHICH IS WALLS)

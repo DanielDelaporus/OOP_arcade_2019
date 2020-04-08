@@ -32,7 +32,7 @@ class Nibler : public Igames
             int x;
             int y;
         } snake_t;
-        snake_t s[100];
+        snake_t s[400];
         typedef struct fruit {
             int x;
             int y;
