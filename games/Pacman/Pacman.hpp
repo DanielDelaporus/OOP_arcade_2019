@@ -34,6 +34,7 @@ class Pacman : public Igames {
         int loop(int);
         Games GetGame();
         int_x4 get_allowed_moves(int, int);
+        int get_collision(int, int);
 
     protected:
         Games *game;
