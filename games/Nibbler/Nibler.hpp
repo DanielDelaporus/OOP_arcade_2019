@@ -12,8 +12,6 @@
 #include<list>
 #include <algorithm>
 #include <ctime>
-#include "Bullet.hpp"
-#include "Enemy.hpp"
 #include "../Igames.hpp"
 #include "../Games.hpp"
 
