@@ -57,7 +57,6 @@ Nibler::~Nibler()
     delete game;
 }
 
-#include <iostream>
 
 int Nibler::loop(int deltatime)
 {
@@ -90,19 +89,17 @@ int Nibler::loop(int deltatime)
         for(int i = 1; i < snake_size; i++)
         {
             if (s[0].x == s[i].x && s[0].y == s[i].y) {
-                std::cout << "test2" << std::endl;
                 return 1;
             }
                 
         }
         if (s[0].x == f.x && s[0].y == f.y) {
             random_fruit();
-            game->mat[f.y][f.x] = 3;
             game->score += 1;
             snake_size += 1;
         }
+        game->mat[f.y][f.x] = 3;
         if (s[0].x == 0 || s[0].x == 19 || s[0].y == 0 || s[0].y == 19) {
-            std::cout << "test" << std::endl;
             return 1;
         }
     }
