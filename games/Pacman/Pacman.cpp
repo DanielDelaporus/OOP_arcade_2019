@@ -47,7 +47,7 @@ Pacman::Pacman(std::string const path)
     int j = 0;
     int rs;
 
-    std::ifstream myfile(path);
+    std::fstream myfile(path);
     std::string line;
 
     for (i = 0; i < 40; i++)
@@ -71,6 +71,7 @@ Pacman::Pacman(std::string const path)
             i++;
         }
     }
+    myfile.is_open();
     while (game->mat[game->posy][game->posx] == 0 || game->mat[game->posy][game->posx] == 1 || game->mat[game->posy][game->posx] == 5 || game->mat[game->posy][game->posx] == 6 || game->mat[game->posy][game->posx] == 7) {
         std::srand(std::time(nullptr));
         game->posx = std::rand() % 26 + 1;
@@ -82,6 +83,8 @@ Pacman::Pacman(std::string const path)
 
 Pacman::~Pacman()
 {
+    Blinky->~Ghost();
+    Pinky->~Ghost();
 }
 
 void Pacman::drawmap() const
@@ -220,10 +223,4 @@ extern "C" Igames* create() {
 
 extern "C" void destroy(Igames* p) {
     delete p;
-}
-
-int main()
-{
-    Pacman game("map1.pmap");
-    game.drawmap();
 }

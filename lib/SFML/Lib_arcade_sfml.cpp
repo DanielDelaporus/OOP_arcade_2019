@@ -106,6 +106,9 @@ void Lib_arcade_sfml::refresh(Games game)
     window->display();
 }
 
+#include <iostream>
+#include <fstream>
+
 void Lib_arcade_sfml::endgame(std::string name)
 {
     sf::Font font;
@@ -125,15 +128,33 @@ void Lib_arcade_sfml::endgame(std::string name)
         window->clear();
         if (font.loadFromFile("lib/SFML/arial.ttf"))
         {
-            //std::string Game: = "Game: " + game.name;
             std::string score = "Score: " + std::to_string(game.score);
             text.setString(score);
             text.setFont(font);
-            text.setCharacterSize(150);
+            text.setCharacterSize(50);
             text.setFillColor(sf::Color::Red);
             text.setPosition(50, 50);
             text.setStyle(sf::Text::Bold);
             window->draw(text);
+
+            text.setPosition(50, 150);
+            std::fstream ifs("./playerprofile/" + name, std::fstream::out | std::fstream::in);
+            std::string thescore;
+            int line = 0;
+            int currentline = 0;
+            if (game.name == "Pacman")
+                line = 1;
+            if (game.name == "Nibbler")
+                line = 2;
+            while (line != currentline)
+                getline(ifs, thescore);
+            getline(ifs, thescore);
+            if (thescore == "" )
+                thescore = "0";
+            text.setString(("Highscore : " + thescore).data());
+            ifs.close();
+            window->draw(text);
+
         }
         window->draw(text);
         window->display();
