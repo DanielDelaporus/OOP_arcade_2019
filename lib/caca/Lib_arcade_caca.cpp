@@ -82,7 +82,7 @@ void Lib_arcade_caca::refresh(Games game)
     caca_refresh_display(display);
 }
 
-void Lib_arcade_caca::endgame()
+void Lib_arcade_caca::endgame(std::string name)
 {
     if (game.name == "Select")
         return;
