@@ -60,7 +60,7 @@ int main(int argc, char **argv)
                 which_lib = 0;
             }
             else if ((which_lib == 1 && nowkey == Event::NEXT_GRAPH) || (which_lib == 0 && nowkey == Event::PREV_GRAPH)){
-                //create_graph = lib_constructor("./lib/lib_arcade_gtk.so");
+                //create_graph = lib_constructor("./lib/lib_arcade_caca.so");
                 which_lib = 2;
             }
             else {
@@ -124,7 +124,6 @@ int main(int argc, char **argv)
             lib = create_graph();
             lib->assign_game(fox->GetGame());
             lib->refresh(fox->GetGame());
-
         }
         else if (nowkey == Event::NEXT_GAME || nowkey == Event::PREV_GAME){
             destroy_game(fox);

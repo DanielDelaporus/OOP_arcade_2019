@@ -19,6 +19,7 @@ games:
 graphicals:
 			make -C lib/ncurse/
 			make -C lib/SFML/
+			make -C lib/caca/
 
 clean:
 			make clean -C lib/ncurse
@@ -28,6 +29,7 @@ clean:
 			make clean -C games/Select/
 			make clean -C lib/SFML/
 			make clean -C games/Nibbler/
+			make clean -C lib/caca/
 
 fclean:		clean
 			make fclean -C lib/ncurse
@@ -37,6 +39,7 @@ fclean:		clean
 			make fclean -C games/Select/
 			make fclean -C lib/SFML/
 			make fclean -C games/Nibbler/
+			make fclean -C lib/caca/
 
 re:			fclean all
 
