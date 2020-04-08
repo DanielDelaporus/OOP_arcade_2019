@@ -106,7 +106,7 @@ void Lib_arcade_sfml::refresh(Games game)
     window->display();
 }
 
-void Lib_arcade_sfml::endgame()
+void Lib_arcade_sfml::endgame(std::string name)
 {
     sf::Font font;
     sf::Text text;

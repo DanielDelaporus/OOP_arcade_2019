@@ -14,5 +14,6 @@
 
 createg_t *lib_gconstructor(std::string name);
 destroyg_t *lib_gdestructor(std::string name);
+void newscore(Games fox, std::string name);
 
 #endif /* !LIB_HANDLE_HPP_ */

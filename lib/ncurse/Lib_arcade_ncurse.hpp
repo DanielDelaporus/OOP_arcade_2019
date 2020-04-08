@@ -31,7 +31,7 @@ class Lib_arcade_ncurse : public IgraphicLib {
 
         virtual void clear() override;
 
-        virtual void endgame() override;
+        virtual void endgame(std::string) override;
 
         virtual void init(int x, int y) override;
         virtual Event Keypressed() override;

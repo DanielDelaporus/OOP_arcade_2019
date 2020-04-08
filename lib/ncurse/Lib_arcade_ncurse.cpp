@@ -85,22 +85,41 @@ void Lib_arcade_ncurse::refresh(Games game)
     ref();
 }
 
-void Lib_arcade_ncurse::endgame()
+#include <iostream>
+#include <fstream>
+
+void Lib_arcade_ncurse::endgame(std::string name)
 {
     if (game.name == "Select")
         return;
-    while (getch())
+    while (getch() != 27)
     {
+        std::ifstream ifs("./playerprofile/" + name, std::ifstream::out | std::ifstream::in);
         clear();
         move(30, (LEFTMARGINE/2) + 64);
         printw("GAME OVER");
         move(32, (LEFTMARGINE/2) + 64);
-        if (game.score == 1)//Total
-            printw("You Win !");
-        else {
-            printw("Score : ");
-            printw(std::to_string(game.score).data());
-        }
+        printw("Score : ");
+        move(33, (LEFTMARGINE/2) + 66);
+        printw((name + " : " + std::to_string(game.score)).data());
+    
+        move(35, ((LEFTMARGINE/2) + 64));
+        printw(("Top " + game.name + " Score : ").data());
+        move(36, (LEFTMARGINE/2) + 66);
+        std::string thescore;
+        int line = 0;
+        int currentline = 0;
+        if (game.name == "Pacman")
+            line = 1;
+        if (game.name == "Nibbler")
+            line = 2;
+        while (line != currentline)
+            getline(ifs, thescore);
+        getline(ifs, thescore);
+        if (thescore == "")
+            thescore = "0";
+        printw((name + " : " + thescore).data());
+        ifs.close();
     }
 }
 

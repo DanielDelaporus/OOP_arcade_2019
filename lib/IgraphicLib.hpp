@@ -18,7 +18,7 @@ class IgraphicLib {
         virtual void refresh(Games) = 0;
         virtual void clear() = 0;
         virtual void destroy() = 0;
-        virtual void endgame() = 0;
+        virtual void endgame(std::string) = 0;
         virtual void assign_game(Games g) = 0;
     protected:
     private:

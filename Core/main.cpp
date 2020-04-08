@@ -12,8 +12,7 @@
 #include "lib_games_handle.hpp"
 
 #define PRINTER(x) std::cout << x << std::endl;
-
-#include <filesystem>
+#include <fstream>
 
 int main(int argc, char **argv)
 {
@@ -22,6 +21,18 @@ int main(int argc, char **argv)
         std::cout << "Usage: ./arcade path_to_lib/lib.so" << std::endl;
         return 0;
     }
+    std::string name;
+    std::cout << "Enter name : "; // no flush needed
+    std::cin >> name;
+
+    std::ifstream d("./playerprofile/"+name,std::fstream::out);
+
+    if (!d.is_open()) {
+        std::fstream f("./playerprofile/"+name,std::fstream::out);
+        f << "0\n0\n0\n";
+        f.close();
+    }
+    d.close();
 
     lib_core = argv[1];
 
@@ -60,7 +71,7 @@ int main(int argc, char **argv)
                 which_lib = 0;
             }
             else if ((which_lib == 1 && nowkey == Event::NEXT_GRAPH) || (which_lib == 0 && nowkey == Event::PREV_GRAPH)){
-                //create_graph = lib_constructor("./lib/lib_arcade_gtk.so");
+                //create_graph = lib_constructor("./lib/lib_arcade_caca.so");
                 which_lib = 2;
             }
             else {
@@ -75,7 +86,7 @@ int main(int argc, char **argv)
         time++;
         lib->refresh(fox->GetGame());
     }
-    lib->endgame();
+    lib->endgame(name);
     int which_game = fox->GetGame().posx;
     which_lib = fox->GetGame().posy;
     destroy_graph(lib);
@@ -95,7 +106,7 @@ int main(int argc, char **argv)
     else if (which_lib == 1)
         create_graph = lib_constructor("./lib/lib_arcade_sfml.so");
     else
-        create_graph = lib_constructor("./lib/lib_arcade_gtk.so");
+        create_graph = lib_constructor("./lib/lib_arcade_caca.so");
 
     fox = create_game();
     lib = create_graph();
@@ -153,7 +164,8 @@ int main(int argc, char **argv)
         time++;
         lib->refresh(fox->GetGame());
     }
-    lib->endgame();
+    newscore(fox->GetGame(), name);
+    lib->endgame(name);
     destroy_graph(lib);
     destroy_game(fox);
     return 0;

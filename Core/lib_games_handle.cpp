@@ -46,3 +46,48 @@ destroyg_t *lib_gdestructor(std::string name)
     }
     return destroyer;
 }
+
+#include<iostream>
+#include<fstream>
+#include<limits>
+
+void newscore(Games fox, std::string name)
+{
+    std::fstream ofs("./playerprofile/" + name, std::fstream::out | std::fstream::in);
+    int score = fox.score;
+    int currentline = 0;
+    if (fox.name == "SolarFox") {
+        while ( currentline != 2) {
+            if (currentline == 0) {
+                ofs << score << std::endl;
+            }
+            else {
+                ofs.ignore( std::numeric_limits<std::streamsize>::max(), '\n');
+            }
+            ++currentline;
+        }
+    }
+    if (fox.name == "Pacman") {
+        while ( currentline != 2) {
+            if (currentline == 1) {
+                ofs << score << std::endl;
+            }
+            else {
+                ofs.ignore( std::numeric_limits<std::streamsize>::max(), '\n');
+            }
+            ++currentline;
+        }
+    }
+    if (fox.name == "Nibbler") {
+        while ( currentline != 3) {
+            if (currentline == 2) {
+                ofs << score << std::endl;
+            }
+            else {
+                ofs.ignore( std::numeric_limits<std::streamsize>::max(), '\n');
+            }
+            ++currentline;
+        }
+    }
+    ofs.close();
+}

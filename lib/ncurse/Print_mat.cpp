@@ -114,7 +114,7 @@ void printSelect(Games game)
 
     move(29, 75);
     attron(COLOR_PAIR((game.posy == 2) + 1));
-    printw("---GTK---");
+    printw("---LibCaca---");
     attroff(COLOR_PAIR((game.posy == 2) + 1));
 }
 
