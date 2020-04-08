@@ -40,7 +40,6 @@ class Lib_arcade_caca : public IgraphicLib {
     protected:
         caca_display_t *display;
         caca_canvas_t *canvas;
-        //sf::RenderWindow *window;
     private:
 };
 
