@@ -6,6 +6,12 @@ Date: Avril 2020
 
 Language: C++
 
+## Contributors:
+[Baptiste Godeau](https://github.com/Toast-arch)  
+[Solal Depardieu](https://github.com/DanielDelaporus)  
+[Vincent DOUROUX](https://github.com/vince52)  
+
+
 ## Compilation:
 
 Compilation via Makefile  
