@@ -1,4 +1,27 @@
 # OOP_arcade_2019
+
+The goal was to do an arcade game
+
+Date: Avril 2020
+
+Language: C++
+
+## Compilation:
+
+Compilation via Makefile  
+```bash
+make
+make clean
+./arcade
+```
+
+remove compilation files:
+```bash
+make fclean
+```
+
+## Required packages
+
 Chef de groupe: vincent.douroux@epitech.eu  
 Voici les dépendances:  
 ncurses-devel                  6.1.12  
